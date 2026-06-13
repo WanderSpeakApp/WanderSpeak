@@ -154,7 +154,7 @@
   .dest-lang { font-size: 13px; color: var(--gray); margin-top: 4px; }
 
   /* ── PHRASE SHEET ── */
-  .phrase-sheet { display: none; animation: fadeUp 0.4s ease both; }
+  .phrase-sheet { display: none; animation: fadeUp 0.4s ease both; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
   .phrase-sheet.visible { display: block; }
 
   .sheet-header {
@@ -922,118 +922,56 @@ function saveSheetAsImage() {
     return;
   }
   
-  const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+  alert('Creating image...');
   
-  if (isMobile) {
-    // MOBILE: Save as 2 images
-    saveTwoImages(fullSheet, language);
-  } else {
-    // DESKTOP: Save as 1 long image
-    saveOneImage(fullSheet, language);
-  }
-}
-
-function saveOneImage(fullSheet, language) {
-  alert('Creating image... This may take a moment.');
-  
+  // Safari/iPhone optimized settings
   html2canvas(fullSheet, {
     backgroundColor: '#26215C',
-    scale: 2,
+    scale: 1.5,
     useCORS: true,
     allowTaint: true,
+    imageTimeout: 0,
+    logging: false,
+    windowWidth: fullSheet.scrollWidth,
+    windowHeight: fullSheet.scrollHeight,
   }).then(canvas => {
-    canvas.toBlob(blob => {
-      const url = URL.createObjectURL(blob);
+    const dataUrl = canvas.toDataURL('image/png');
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      // Mobile: Open in new window for long-press save
+      const newWindow = window.open();
+      newWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>WanderSpeak - ${language}</title>
+          <style>
+            * { margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
+            body { background: #000; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+            img { max-width: 100%; height: auto; -webkit-user-select: none; }
+          </style>
+        </head>
+        <body>
+          <img src="${dataUrl}" alt="WanderSpeak ${language}"/>
+        </body>
+        </html>
+      `);
+    } else {
+      // Desktop: Direct download
       const link = document.createElement('a');
-      link.href = url;
+      link.href = dataUrl;
       link.download = `WanderSpeak-${language.replace(/\s+/g, '-')}.png`;
+      document.body.appendChild(link);
       link.click();
-      alert('Image saved! Check your downloads folder.');
-    }, 'image/png', 0.95);
+      document.body.removeChild(link);
+      alert('Image saved! Check your downloads.');
+    }
   }).catch(err => {
-    console.error('Error:', err);
-    alert('Could not save image. Please try again!');
+    console.error('Save error:', err);
+    alert('Long-press this page → "Save as Image" for an alternative!');
   });
-}
-
-function saveTwoImages(fullSheet, language) {
-  alert('Creating images... This may take a moment.');
-  
-  const sections = fullSheet.querySelectorAll('.full-section');
-  
-  // Image 1: First 3 sections
-  const img1Container = document.createElement('div');
-  img1Container.style.backgroundColor = '#26215C';
-  img1Container.style.padding = '20px';
-  img1Container.style.position = 'absolute';
-  img1Container.style.left = '-9999px';
-  
-  const title1 = document.createElement('h2');
-  title1.textContent = language + ' - Phrases & Food';
-  title1.style.color = 'white';
-  title1.style.fontFamily = 'Outfit, sans-serif';
-  title1.style.fontSize = '24px';
-  title1.style.marginBottom = '20px';
-  img1Container.appendChild(title1);
-  
-  for (let i = 0; i < 3 && i < sections.length; i++) {
-    img1Container.appendChild(sections[i].cloneNode(true));
-  }
-  document.body.appendChild(img1Container);
-  
-  // Image 2: Remaining sections
-  const img2Container = document.createElement('div');
-  img2Container.style.backgroundColor = '#26215C';
-  img2Container.style.padding = '20px';
-  img2Container.style.position = 'absolute';
-  img2Container.style.left = '-9999px';
-  
-  const title2 = document.createElement('h2');
-  title2.textContent = language + ' - Locations & Tips';
-  title2.style.color = 'white';
-  title2.style.fontFamily = 'Outfit, sans-serif';
-  title2.style.fontSize = '24px';
-  title2.style.marginBottom = '20px';
-  img2Container.appendChild(title2);
-  
-  for (let i = 3; i < sections.length; i++) {
-    img2Container.appendChild(sections[i].cloneNode(true));
-  }
-  document.body.appendChild(img2Container);
-  
-  let completed = 0;
-  
-  html2canvas(img1Container, {
-    backgroundColor: '#26215C',
-    scale: 1,
-    useCORS: true,
-    allowTaint: true,
-  }).then(canvas1 => {
-    canvas1.toBlob(blob => {
-      window.open(URL.createObjectURL(blob), '_blank');
-      completed++;
-      if (completed === 2) cleanup();
-    }, 'image/png', 0.95);
-  }).catch(err => console.error('Image 1 error:', err));
-  
-  html2canvas(img2Container, {
-    backgroundColor: '#26215C',
-    scale: 1,
-    useCORS: true,
-    allowTaint: true,
-  }).then(canvas2 => {
-    canvas2.toBlob(blob => {
-      window.open(URL.createObjectURL(blob), '_blank');
-      completed++;
-      if (completed === 2) cleanup();
-    }, 'image/png', 0.95);
-  }).catch(err => console.error('Image 2 error:', err));
-  
-  function cleanup() {
-    document.body.removeChild(img1Container);
-    document.body.removeChild(img2Container);
-    alert('Two images opened! Long-press each → Save Image → Save to Favorites');
-  }
 }
 </script>
 </body>
