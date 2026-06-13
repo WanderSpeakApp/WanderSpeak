@@ -922,26 +922,41 @@ function saveSheetAsImage() {
     return;
   }
   
-  // Use html2canvas with better settings
+  // Use html2canvas with mobile-friendly settings
   html2canvas(element, {
     backgroundColor: '#26215C',
     scale: 2,
-    logging: true,
+    logging: false,
     useCORS: true,
     allowTaint: true,
     imageTimeout: 0,
   }).then(canvas => {
-    // Create download link
-    const link = document.createElement('a');
-    link.href = canvas.toDataURL('image/png');
-    link.download = `WanderSpeak-${language.replace(/\s+/g, '-')}.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    alert('Image saved! Check your downloads folder.');
+    // Convert canvas to blob for better mobile support
+    canvas.toBlob((blob) => {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `WanderSpeak-${language.replace(/\s+/g, '-')}.png`;
+      
+      // For mobile: try different approaches
+      if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
+        // Mobile: open in new tab for long-press save
+        window.open(url, '_blank');
+        alert('Long-press the image and select "Save Image" to add to your Favorites album!');
+      } else {
+        // Desktop: direct download
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        alert('Image saved! Check your downloads folder.');
+      }
+      
+      // Clean up after delay
+      setTimeout(() => URL.revokeObjectURL(url), 100);
+    }, 'image/png');
   }).catch(err => {
     console.error('Save error:', err);
-    alert('Could not save as image. Please try:\n1. Taking a screenshot\n2. Or try again in a few seconds');
+    alert('Could not save image. Please take a screenshot instead!');
   });
 }
 </script>
