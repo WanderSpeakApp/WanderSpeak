@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="2382bb42-f5d6-48db-97fd-98bdd16e93a3"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="//embed.typeform.com/next/embed.js"></script>
 <style>
   :root {
     --purple: #534AB7;
@@ -314,6 +316,7 @@
   .head-blue { background: #1A5276; }
   .head-purple { background: #7D3C98; }
   .head-green { background: #1E8449; }
+  .head-pink { background: #C2185B; }
 
   .num-grid { display: grid; grid-template-columns: repeat(4,1fr); }
   .num-cell {
@@ -330,6 +333,15 @@
     font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.6;
   }
   .currency-rate { font-weight: 700; color: var(--teal); font-size: 15px; }
+
+  .tip-item {
+    padding: 10px 16px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .tip-item:last-child { border-bottom: none; }
 
   .save-btn {
     width: 100%; padding: 16px;
@@ -364,7 +376,8 @@
   .step-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
 
   /* ── LANGUAGES COMING SOON ── */
-  .coming-section { padding: 32px 0; }
+  .coming-section { padding: 32px 0; text-align: center; }
+  .lang-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 20px; }
   .coming-title { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 6px; }
   .coming-sub { font-size: 13px; color: var(--gray); margin-bottom: 20px; }
   .lang-pills { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -395,6 +408,27 @@
   .mt-8 { margin-top: 8px; }
   .mt-16 { margin-top: 16px; }
   .mt-24 { margin-top: 24px; }
+
+  /* ── FEEDBACK SECTION ── */
+  .feedback-section {
+    text-align: center;
+    padding: 40px 0;
+  }
+  .feedback-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 28px; font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+  .feedback-sub {
+    font-size: 15px; color: rgba(255,255,255,0.65);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .typeform-embed-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
 </style>
 </head>
 <body>
@@ -426,6 +460,43 @@
     <h1>Sound like a<br><em>local.</em></h1>
     <p class="hero-sub">Phonetic phrases for English speaking travelers. Every word spelled out so you can actually say it — no studying, no app, no wifi needed.</p>
     <p class="hero-tagline">Pick your destination below 👇</p>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <div class="divider"></div>
+  <section class="how-section">
+    <h2 class="how-title">How it works</h2>
+    <p class="how-sub">No language degree required.</p>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Pick your destination</div>
+          <div class="step-desc">Choose from our growing list of countries — more added every week.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Get your free phrase sheet</div>
+          <div class="step-desc">Read as you would in English. Every word spelled out phonetically.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Save it to your phone</div>
+          <div class="step-desc">Screenshot it, save it to your camera roll. Works offline. No app or wifi needed when you land.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Sound like a local</div>
+          <div class="step-desc">Your effort to speak the language earns goodwill. You don't need to be perfect — just try.</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- DESTINATION PICKER -->
@@ -501,65 +572,34 @@
 
   </div>
 
-  <!-- HOW IT WORKS -->
-  <div class="divider"></div>
-  <section class="how-section">
-    <h2 class="how-title">How it works</h2>
-    <p class="how-sub">No language degree required.</p>
-    <div class="how-steps">
-      <div class="how-step">
-        <div class="step-num">1</div>
-        <div>
-          <div class="step-title">Pick your destination</div>
-          <div class="step-desc">Choose from our growing list of countries — more added every week.</div>
-        </div>
-      </div>
-      <div class="how-step">
-        <div class="step-num">2</div>
-        <div>
-          <div class="step-title">Get your free phrase sheet</div>
-          <div class="step-desc">Every word spelled out phonetically so you can read it like English and sound it out instantly.</div>
-        </div>
-      </div>
-      <div class="how-step">
-        <div class="step-num">3</div>
-        <div>
-          <div class="step-title">Save it to your phone</div>
-          <div class="step-desc">Screenshot it, save it to your camera roll. Works offline. No app or wifi needed when you land.</div>
-        </div>
-      </div>
-      <div class="how-step">
-        <div class="step-num">4</div>
-        <div>
-          <div class="step-title">Sound like a local</div>
-          <div class="step-desc">One phrase in the local language earns more goodwill than perfect English. Just try.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- COMING SOON -->
   <div class="divider"></div>
   <section class="coming-section">
     <h2 class="coming-title">More languages coming 🌍</h2>
     <p class="coming-sub">New destination dropping every week. Follow @WanderSpeak to stay updated.</p>
     <div class="lang-pills">
-      <div class="lang-pill live">🇪🇸 Spanish</div>
-      <div class="lang-pill live">🇧🇷 Portuguese</div>
-      <div class="lang-pill live">🇫🇷 French</div>
-      <div class="lang-pill live">🇮🇹 Italian</div>
-      <div class="lang-pill live">🇯🇵 Japanese</div>
-      <div class="lang-pill live">🇰🇷 Korean</div>
       <div class="lang-pill">🇻🇳 Vietnamese</div>
       <div class="lang-pill">🇩🇪 German</div>
       <div class="lang-pill">🇬🇷 Greek</div>
       <div class="lang-pill">🇹🇭 Thai</div>
-      <div class="lang-pill">🇲🇽 Mexican Spanish</div>
       <div class="lang-pill">🇳🇱 Dutch</div>
     </div>
+    <a href="https://form.typeform.com/to/fF85BPwV" target="_blank" style="display:inline-block;margin-top:20px;padding:12px 28px;background:var(--teal);color:#26215C;font-weight:600;border-radius:8px;text-decoration:none;font-size:14px;transition:all 0.2s">📝 Request a Language</a>
   </section>
 
   <div class="divider"></div>
+</div>
+
+
+  <!-- GIVE US FEEDBACK -->
+  <div class="divider"></div>
+  <section class="feedback-section">
+    <h2 class="feedback-title">Give Us Feedback</h2>
+    <p class="feedback-sub">Help us improve! Tell us what phrases you needed, what worked well, or what languages you'd like next.</p>
+    <div class="typeform-embed-container">
+      <div data-tf-widget="fF85BPwV" data-tf-opacity="0" data-tf-iframe-props="title=WanderSpeak Feedback" data-tf-transitive-search-params data-tf-medium="snippet"></div>
+    </div>
+  </section>
 </div>
 
 <!-- FOOTER -->
@@ -595,8 +635,9 @@ const DATA = {
       ["Let's go!", "Bah-Mo-nos!"],
     ],
     numbers: ["1","Oo-No","2","Dos","3","Trays","4","Kwah-Tro","5","Seen-Ko","6","Say-Is","7","Syeh-Teh","8","O-Cho","9","Nweh-Veh","10","Dyez","100","Syen","1,000","Meel"],
-    food: [["Water","Ah-Gwah"],["Beer","Ser-Veh-Sah"],["Coffee (black)","Ka-Feh So-Lo"],["No dairy","Sin Lak-Teh-Os"],["No gluten","Sin gloo-TEN"],["Vegetarian","Veh-heh-tah-RYAH-no"],["Chicken","Po-Yo"],["Beef","Ter-Neh-Rah"],["Shrimp","Gam-Bas"]],
-    locations: [["Restroom","el Ban-yo"],["Restaurant","Res-tau-RAN-teh"],["Beach","Plah-Yah"],["Store","Tyen-Dah"],["Hotel","O-Tel"]],
+    food: [["Water","Ah-Gwah"],["Bottled Water","Ah-Gwah Em-Boh-teh-LAH-dah"],["Ice","Ee-EH-loh"],["Beer","Ser-Veh-Sah"],["Coffee (black)","Ka-Feh So-Lo"],["No dairy","Sin Lak-Teh-Os"],["No gluten","Sin gloo-TEN"],["Chicken","Po-Yo"],["Beef","Ter-Neh-Rah"],["Fish","Pes-KAH-doh"],["No shellfish","Sin Mah-rees-KOS"]],
+    locations: [["Restroom","el Ban-yo"],["Restaurant","Res-tau-RAN-teh"],["Hotel","O-Tel"],["Train Station","Es-tah-SYOHN deh treh-NES"],["Airport","Ah-eh-roo-WER-toh"],["Museum","Moo-SEH-oh"],["Market","Mer-KAH-doh"],["Pharmacy","Far-MAH-see-ah"],["ATM","Kah-HEH-roh Ow-toh-MAH-tee-koh"],["Currency Exchange","Kahn-bee-oh deh Mohn-EH-dah"],["Taxi Stand","Pah-RAH-dah deh tah-SEES"]],
+    culturalTips: ["Learning a few phrases shows respect — locals love when you try the language.","Dinner is typically 8-9pm. Plan meals and restaurant reservations accordingly.","Greetings matter. Always say 'Hola' or 'Buenos días' before asking questions.","Use formal titles (Señor/Señora) until invited to use first names.","Take your time with meals — they're meant for connection, not speed."],
     currency: "Euro (Spain) / Peso (LatAm)", rate: "1 USD ≈ 0.92 EUR / ~17 MXN", tip: "Tip: 5-10% in restaurants in Spain. Not expected in Mexico.",
   },
   portuguese: {
@@ -618,8 +659,9 @@ const DATA = {
       ["Awesome / Let's Go!", "Legal / BOH-rah!"],
     ],
     numbers: ["1","oom","2","doyss","3","Tres","4","Kwa-troh","5","SEEN-koo","6","Savss","7","SEH-chee","8","OY-toh","9","NOH-vee","10","days","100","Sehng","1,000","mil"],
-    food: [["Water w/ ice","Agua com Zaylo"],["Beer","Ser-Vay-zhah"],["Coffee (black)","Café PRAY-toh"],["No dairy","seng Lahk-TOH-see"],["Chicken","FRAN-goo"],["Beef","Carnee"],["Shrimp","Camah-rao"]],
-    locations: [["Restroom","Bahn-yay-roo"],["Beach","Pry-ah"],["Store","Loh-zhah"],["Menu","Kar-Dah-pee-oh"],["Room/Key","Quarto/SAH-Vee"]],
+    food: [["Water w/ ice","Agua com Zaylo"],["Bottled Water","Agua Em-boh-teh-LAH-dah"],["Ice","JEH-loh"],["Beer","Ser-Vay-zhah"],["Coffee (black)","Café PRAY-toh"],["No dairy","seng Lahk-TOH-see"],["Chicken","FRAN-goo"],["Beef","Carnee"],["Fish","Pee-SHAH-doo"],["No shellfish","Sem Mah-rees-KOZ"]],
+    locations: [["Restroom","Bahn-yay-roo"],["Restaurant","Res-toh-RAN-teh"],["Hotel","O-TEL"],["Train Station","Es-tah-SOW deh treh-NYSH"],["Airport","Ah-roh-PORT-oh"],["Museum","Moo-ZAY-oo"],["Market","Mer-KAH-doh"],["Pharmacy","Far-MAH-see-ah"],["ATM","CX-cha"],["Currency Exchange","Kahn-bee-ah deh Moe-EH-dah"],["Taxi Stand","Pon-TOH de TACK-see"]],
+    culturalTips: ["Brazilians are warm and social — match their energy and enthusiasm.","Dinner is around 8pm. Street food is perfect for experiencing local life.","Avoid being overly formal. Brazilians prefer warmth over stiffness.","Carnival and local festivals show the vibrant culture — join in if you can!","Always greet with a smile and genuine interest."],
     currency: "Brazilian Real", rate: "1 USD = ~5 Reais", tip: "Shorthand: Remove 0, ×2, minus 10%. $18.50 USD = R$100",
   },
   french: {
@@ -641,8 +683,9 @@ const DATA = {
       ["Beautiful / Delicious", "Belle / Deh-lee-syuh"],
     ],
     numbers: ["1","oon","2","Deu","3","Twah","4","Caht","5","Senk","6","Sis","7","Set","8","hweet","9","Nuf","10","Dis","100","Son","1,000","Mil"],
-    food: [["Water","Loo"],["Sparkling Water","Oo Peti Yant"],["Coffee","Cafe"],["No milk","pah du lay"],["Soy Milk","lay du sohjah"],["Almond Milk","Lay D'amond"],["Oat Milk","Lay D'ah-vwon"]],
-    locations: [["Toilet","Twah Let"],["Hotel","O tel"],["Train Station","Gar"],["Restaurant","Res-toh-RON"]],
+    food: [["Water","Loo"],["Bottled Water","Loo Em-boo-TAY"],["Ice","Glah-SOHN"],["Sparkling Water","Oo Peti Yant"],["Coffee","Cafe"],["No milk","pah du lay"],["Chicken","Poo-LAY"],["Beef","BIF"],["Fish","Pwah-SOHN"],["No shellfish","Pah duh KROO-stah-say"]],
+    locations: [["Restroom","Twah-LET"],["Restaurant","Res-toh-RAN"],["Hotel","O-TEL"],["Train Station","Gare"],["Airport","Ah-roh-PORT"],["Museum","Moo-ZAY"],["Market","Mar-SHAY"],["Pharmacy","Far-mah-SEE"],["ATM","Dis-pen-SAH-triss"],["Currency Exchange","Boo-ROH duh SHANJ"],["Taxi Stand","Stah-SYOHN deh tack-SEE"]],
+    culturalTips: ["Always greet with 'Bonjour' before asking anything — it's considered rude to skip this.","Dinner is 7-8pm. Meals are social events, not rushed affairs.","Dress nicely when dining out — appearance matters in France.","Use formal speech (vous) with strangers unless invited to use informal (tu).","Take pride in the experience — food and wine are part of French culture."],
     currency: "Euro", rate: "1 USD ≈ 0.92 EUR", tip: "Tip: Not mandatory in France. Round up or leave small change.",
   },
   italian: {
@@ -664,8 +707,9 @@ const DATA = {
       ["Beautiful / Delicious", "Bellisima / Buonissimo"],
     ],
     numbers: ["1","Oo Noh","2","Doo Eh","3","Treh","4","Kwah-Troh","5","Cheen-Kweh","6","Say","7","Seht-tey","8","Oh-Toh","9","Noh-veh","10","Dee-EH-chee","100","Chento","1,000","Meelay"],
-    food: [["Water","Ah Kwah"],["Sparkling Water","Ah kway Frizante"],["Coffee","Cafe"],["Oat Milk","latte Dah vey na"],["Allergic to Milk","ah-LAIR-jee-koh al LAT-teh"],["No gluten","sen-zah gloo-TEN"]],
-    locations: [["Toilet","bah~no"],["Hotel","Hotel"],["Train Station","stah zione Ferroviaria"],["Restaurant","Rees-toh-RAN-teh"]],
+    food: [["Water","Ah Kwah"],["Bottled Water","Ah Kwah Em-boh-tee-AH-tah"],["Ice","GHEE-ah-choh"],["Sparkling Water","Ah kway Frizante"],["Coffee","Cafe"],["Chicken","Poh-LOH"],["Beef","KAR-neh"],["Fish","PAY-sheh"],["No shellfish","sen-zah KROO-stah-chay"],["Allergic to Milk","ah-LAIR-jee-koh al LAT-teh"]],
+    locations: [["Restroom","bah-NO"],["Restaurant","Rees-toh-RAN-teh"],["Hotel","Oh-TEL"],["Train Station","Stah-zee-OH-neh FER-roh-vee-AH-ree-ah"],["Airport","Ah-roh-PORT-oh"],["Museum","Moo-SEH-oh"],["Market","Mer-KAH-toh"],["Pharmacy","Far-mah-chee-AH"],["ATM","Bahn-KO-MAT"],["Currency Exchange","Kahn-bee-ah deh VAH-loo-TAH"],["Taxi Stand","Pun-TOH TAH-see"]],
+    culturalTips: ["Dinner is 8-9pm. Plan accordingly and dress nicely for dining out.","Espresso after 11am marks you as a tourist — enjoy it in the morning.","Italians are passionate and animated — don't mistake directness for rudeness.","Slow down and savor meals. Food is meant to be enjoyed, not rushed.","Learn a few Italian words — locals appreciate the effort."],
     currency: "Euro", rate: "1 USD ≈ 0.92 EUR", tip: "Cappuccino after 11am marks you as a tourist. Espresso only after lunch.",
   },
   japanese: {
@@ -688,8 +732,9 @@ const DATA = {
       ["Delicious!", "Oishī"],
     ],
     numbers: ["1","ichi","2","ni","3","san","4","yon","5","go","6","roku","7","nana","8","Hachi","9","Kyu/ku","10","ju","100","hyaku","1,000","sen"],
-    food: [["Water","Mizu"],["Beer","Biru"],["Soy Milk","Ton-Yu"],["Almond Milk","Āmondomiruku"],["Ice","Kori"],["Delicious","Oishī"],["lactose intolerant","yūtōfu-taishō"]],
-    locations: [["Restroom","Basuruum"],["Restaurant","Res-toh-RAN"],["Hotel","Ho-teh-ru"],["Platform","nanban noriban"],["Trash","Gomibako"]],
+    food: [["Water","Mizu"],["Bottled Water","Mizu bin"],["Ice","Koh-REE"],["Beer","Biru"],["Coffee","Koh-HEE"],["Chicken","Tori"],["Beef","Gyoo-nee-KOO"],["Fish","Sakana"],["No shellfish","Ebi, kani nuki"],["Delicious","Oishī"]],
+    locations: [["Restroom","Toh-EH-toe"],["Restaurant","Res-toh-RAN"],["Hotel","Ho-teh-RU"],["Train Station","EH-kee"],["Airport","Koo-KOO"],["Museum","Hah-KOO-tsoo-KAN"],["Market","SHEE-joh"],["Pharmacy","Yah-KYU-kyoh-KU"],["ATM","EH-TEH-EMU"],["Currency Exchange","Ryoh-Gae-YA"],["Taxi Stand","TAH-koo-shee noriba"]],
+    culturalTips: ["Remove shoes when entering homes, temples, and some restaurants.","Slurp noodles loudly — it's polite and shows you're enjoying the meal.","Respect personal space and avoid loud conversations in public.","Convenience stores (konbini) offer authentic, affordable local food.","Bow slightly when greeting and thanking — it shows respect."],
     currency: "Japanese Yen", rate: "1 USD ≈ 149 JPY", tip: "Numbers >10: number + 10 + number. 27 = ni Ju Nana. NO tipping — it can be considered rude.",
   },
   korean: {
@@ -711,8 +756,9 @@ const DATA = {
       ["Good / Bad", "Jo ah yo / An jo ah yo"],
     ],
     numbers: ["1","ill","2","E","3","Sam","4","Sah","5","Oh","6","Yook","7","Chil","8","Pal","9","Koo","10","Shib","100","Baek","1,000","Cheon"],
-    food: [["Water","Mool"],["Beer","Maek Joo"],["Coffee","Coppee"],["No meat","go-gi eob-shi"],["Vegetarian","chae-sik-joo-eui-ja"]],
-    locations: [["Restroom","Hwa Jang Shil"],["Hotel","Hotel"],["Restaurant","Shik-dang"]],
+    food: [["Water","Mool"],["Bottled Water","Mul Byung"],["Ice","Uh-reum"],["Beer","Maek Joo"],["Coffee","Coppee"],["Chicken","Dak"],["Beef","Gyu-Gogi"],["Fish","Saeng-sun"],["No shellfish","Saeu-wa gge eopsi"],["Vegetarian","chae-sik-joo-eui-ja"]],
+    locations: [["Restroom","Hwa Jang Shil"],["Restaurant","Shik-dang"],["Hotel","Ho-tel"],["Train Station","Kee-Cha-Yoke"],["Airport","Gong-Hang"],["Museum","Bak-Mool-Gwan"],["Market","Shija"],["Pharmacy","Yak-Guk"],["ATM","Hyup-Ryok-Gi"],["Currency Exchange","Hwanryuk"],["Taxi Stand","Tack-shee-Seung-Cha-Jang"]],
+    culturalTips: ["Show respect to elders by using formal speech and bowing slightly.","Dinner is typically 6-7pm. Street food culture is incredible — try everything!","Accept drinks and food with both hands — it's a sign of respect.","Remove shoes when entering homes and some traditional restaurants.","Korean BBQ and street markets are the heart of local culture."],
     currency: "Korean Won", rate: "10 USD = ~13,000 KRW", tip: "Remove 3 zeros, less 20%. No tipping at restaurants — go to register to pay.",
   },
 };
@@ -792,7 +838,7 @@ function showFullSheet(dest) {
 
   // All phrases
   html += `<div class="full-section">
-    <div class="full-section-head head-red">All Phrases</div>`;
+    <div class="full-section-head head-red">Basic Travel Phrases</div>`;
   [...d.teaser, ...d.full].forEach(([en,ph]) => {
     html += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
   });
@@ -805,7 +851,11 @@ function showFullSheet(dest) {
   d.numbers.forEach((n,i) => {
     html += `<div class="num-cell ${i%2===1?'num-val':''}">${n}</div>`;
   });
-  html += `</div></div>`;
+  html += `</div>
+    <div style="padding:12px 16px;font-size:12px;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.06);">
+      💡 <strong>Combine numbers:</strong> Most languages combine 40 + 1 to make 41. Check your language's pattern!
+    </div>
+  </div>`;
 
   // Food + Locations side by side
   html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">`;
@@ -820,6 +870,16 @@ function showFullSheet(dest) {
   });
   html += `</div></div>`;
 
+  // Cultural Tips
+  if (d.culturalTips && d.culturalTips.length > 0) {
+    html += `<div class="full-section">
+      <div class="full-section-head head-pink">Travel Like a Local 🌍</div>`;
+    d.culturalTips.forEach((tip) => {
+      html += `<div class="tip-item">• ${tip}</div>`;
+    });
+    html += `</div>`;
+  }
+
   // Currency
   html += `<div class="full-section">
     <div class="full-section-head head-green">Currency — ${d.currency}</div>
@@ -830,12 +890,32 @@ function showFullSheet(dest) {
   </div>`;
 
   // Save button
-  html += `<button class="save-btn" onclick="window.print()">📱 Save / Print this sheet</button>`;
-  html += `<p style="font-size:12px;color:var(--gray);text-align:center;margin-bottom:32px">Screenshot this page to save to your camera roll</p>`;
+  html += `<button class="save-btn" onclick="saveSheetAsImage()">📱 Save this sheet as image</button>`;
+  html += `<p style="font-size:12px;color:var(--gray);text-align:center;margin-bottom:32px">Create a FAVORITES album and save it there for easy access during your trip</p>`;
 
   fs.innerHTML = html;
   fs.classList.add('visible');
   fs.style.display = 'block';
+}
+
+function saveSheetAsImage() {
+  const element = document.getElementById('fullSheet');
+  const language = DATA[currentDest].title;
+  
+  html2canvas(element, {
+    backgroundColor: '#26215C',
+    scale: 2,
+    logging: false,
+    useCORS: true,
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL('image/png');
+    link.download = `WanderSpeak-${language.replace(/\s+/g, '-')}.png`;
+    link.click();
+  }).catch(err => {
+    console.error('Error saving image:', err);
+    alert('Could not save image. Try taking a screenshot instead!');
+  });
 }
 </script>
 </body>
