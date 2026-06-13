@@ -931,29 +931,39 @@ function saveSheetAsImage() {
     allowTaint: true,
     imageTimeout: 0,
   }).then(canvas => {
-    // Convert canvas to blob for better mobile support
-    canvas.toBlob((blob) => {
-      const url = URL.createObjectURL(blob);
+    const imageDataUrl = canvas.toDataURL('image/png');
+    const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      // Mobile: open image in new tab for long-press save
+      const newWindow = window.open();
+      newWindow.document.write(`
+        <html>
+        <head>
+          <title>WanderSpeak - ${language}</title>
+          <style>
+            * { user-select: none; -webkit-user-select: none; -moz-user-select: none; }
+            body { margin: 0; padding: 0; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+            img { max-width: 100%; height: auto; -webkit-touch-callout: default; }
+            p { position: fixed; bottom: 20px; color: #fff; text-align: center; width: 100%; font-size: 14px; margin: 0; }
+          </style>
+        </head>
+        <body>
+          <img src="${imageDataUrl}" style="max-width:100%;height:auto;-webkit-user-select:none;"/>
+          <p>Long-press the image → Save Image → Save to Favorites 📱</p>
+        </body>
+        </html>
+      `);
+    } else {
+      // Desktop: direct download
       const link = document.createElement('a');
-      link.href = url;
+      link.href = imageDataUrl;
       link.download = `WanderSpeak-${language.replace(/\s+/g, '-')}.png`;
-      
-      // For mobile: try different approaches
-      if (/iPhone|iPad|Android/i.test(navigator.userAgent)) {
-        // Mobile: open in new tab for long-press save
-        window.open(url, '_blank');
-        alert('Long-press the image and select "Save Image" to add to your Favorites album!');
-      } else {
-        // Desktop: direct download
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        alert('Image saved! Check your downloads folder.');
-      }
-      
-      // Clean up after delay
-      setTimeout(() => URL.revokeObjectURL(url), 100);
-    }, 'image/png');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      alert('Image saved! Check your downloads folder.');
+    }
   }).catch(err => {
     console.error('Save error:', err);
     alert('Could not save image. Please take a screenshot instead!');
