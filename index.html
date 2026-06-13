@@ -344,15 +344,20 @@
   .tip-item:last-child { border-bottom: none; }
 
   .save-btn {
-    width: 100%; padding: 16px;
-    background: var(--purple); color: var(--white);
-    border: 1.5px solid rgba(255,255,255,0.2);
+    width: 100%; padding: 18px 16px;
+    background: var(--teal); color: #26215C;
+    border: none;
     border-radius: 14px; font-family: 'Outfit', sans-serif;
-    font-size: 15px; font-weight: 600; cursor: pointer;
-    transition: all 0.2s; margin-bottom: 12px;
+    font-size: 18px; font-weight: 700; cursor: pointer;
+    transition: all 0.3s; margin-bottom: 12px;
     display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 4px 16px rgba(46, 204, 154, 0.3);
   }
-  .save-btn:hover { background: var(--purple-md); }
+  .save-btn:hover { 
+    background: #24b896;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(46, 204, 154, 0.5);
+  }
 
   /* ── HOW IT WORKS ── */
   .how-section { padding: 48px 0; text-align: center; }
@@ -775,6 +780,16 @@ function markEmailSubmitted() {
   localStorage.setItem('wanderspeak_email_submitted', 'true');
 }
 
+// Clear email submission (for testing)
+function clearEmail() {
+  localStorage.removeItem('wanderspeak_email_submitted');
+  // Reset the UI
+  document.getElementById('beehiivForm').style.display = 'block';
+  document.getElementById('successState').classList.remove('visible');
+  document.getElementById('lockedSection').style.display = 'block';
+  // Don't reload - just reset the state
+}
+
 function selectDest(dest) {
   // Update button states
   document.querySelectorAll('.dest-btn').forEach(b => b.classList.remove('active'));
@@ -902,19 +917,31 @@ function saveSheetAsImage() {
   const element = document.getElementById('fullSheet');
   const language = DATA[currentDest].title;
   
+  if (!element) {
+    alert('Sheet not found. Please select a language first.');
+    return;
+  }
+  
+  // Use html2canvas with better settings
   html2canvas(element, {
     backgroundColor: '#26215C',
     scale: 2,
-    logging: false,
+    logging: true,
     useCORS: true,
+    allowTaint: true,
+    imageTimeout: 0,
   }).then(canvas => {
+    // Create download link
     const link = document.createElement('a');
     link.href = canvas.toDataURL('image/png');
     link.download = `WanderSpeak-${language.replace(/\s+/g, '-')}.png`;
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
+    alert('Image saved! Check your downloads folder.');
   }).catch(err => {
-    console.error('Error saving image:', err);
-    alert('Could not save image. Try taking a screenshot instead!');
+    console.error('Save error:', err);
+    alert('Could not save as image. Please try:\n1. Taking a screenshot\n2. Or try again in a few seconds');
   });
 }
 </script>
