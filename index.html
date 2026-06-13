@@ -922,19 +922,52 @@ function saveSheetAsImage() {
     return;
   }
   
+  const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+  
+  if (isMobile) {
+    // MOBILE: Save as 2 images
+    saveTwoImages(fullSheet, language);
+  } else {
+    // DESKTOP: Save as 1 long image
+    saveOneImage(fullSheet, language);
+  }
+}
+
+function saveOneImage(fullSheet, language) {
+  alert('Creating image... This may take a moment.');
+  
+  html2canvas(fullSheet, {
+    backgroundColor: '#26215C',
+    scale: 2,
+    useCORS: true,
+    allowTaint: true,
+  }).then(canvas => {
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `WanderSpeak-${language.replace(/\s+/g, '-')}.png`;
+      link.click();
+      alert('Image saved! Check your downloads folder.');
+    }, 'image/png', 0.95);
+  }).catch(err => {
+    console.error('Error:', err);
+    alert('Could not save image. Please try again!');
+  });
+}
+
+function saveTwoImages(fullSheet, language) {
   alert('Creating images... This may take a moment.');
   
-  // Get all sections
   const sections = fullSheet.querySelectorAll('.full-section');
   
-  // Image 1: Phrases, Numbers, Food & Drinks (first 3 sections)
+  // Image 1: First 3 sections
   const img1Container = document.createElement('div');
   img1Container.style.backgroundColor = '#26215C';
   img1Container.style.padding = '20px';
   img1Container.style.position = 'absolute';
   img1Container.style.left = '-9999px';
   
-  // Add title
   const title1 = document.createElement('h2');
   title1.textContent = language + ' - Phrases & Food';
   title1.style.color = 'white';
@@ -943,13 +976,12 @@ function saveSheetAsImage() {
   title1.style.marginBottom = '20px';
   img1Container.appendChild(title1);
   
-  // Add first 3 sections
   for (let i = 0; i < 3 && i < sections.length; i++) {
     img1Container.appendChild(sections[i].cloneNode(true));
   }
   document.body.appendChild(img1Container);
   
-  // Image 2: Locations, Cultural Tips, Currency (remaining sections)
+  // Image 2: Remaining sections
   const img2Container = document.createElement('div');
   img2Container.style.backgroundColor = '#26215C';
   img2Container.style.padding = '20px';
@@ -964,15 +996,12 @@ function saveSheetAsImage() {
   title2.style.marginBottom = '20px';
   img2Container.appendChild(title2);
   
-  // Add remaining sections
   for (let i = 3; i < sections.length; i++) {
     img2Container.appendChild(sections[i].cloneNode(true));
   }
   document.body.appendChild(img2Container);
   
-  // Capture both images
   let completed = 0;
-  const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
   
   html2canvas(img1Container, {
     backgroundColor: '#26215C',
@@ -980,9 +1009,11 @@ function saveSheetAsImage() {
     useCORS: true,
     allowTaint: true,
   }).then(canvas1 => {
-    saveImage(canvas1, language, 'Part1-Phrases', isMobile);
-    completed++;
-    if (completed === 2) cleanup();
+    canvas1.toBlob(blob => {
+      window.open(URL.createObjectURL(blob), '_blank');
+      completed++;
+      if (completed === 2) cleanup();
+    }, 'image/png', 0.95);
   }).catch(err => console.error('Image 1 error:', err));
   
   html2canvas(img2Container, {
@@ -991,33 +1022,17 @@ function saveSheetAsImage() {
     useCORS: true,
     allowTaint: true,
   }).then(canvas2 => {
-    saveImage(canvas2, language, 'Part2-Locations', isMobile);
-    completed++;
-    if (completed === 2) cleanup();
-  }).catch(err => console.error('Image 2 error:', err));
-  
-  function saveImage(canvas, lang, part, mobile) {
-    canvas.toBlob(blob => {
-      const url = URL.createObjectURL(blob);
-      if (mobile) {
-        window.open(url, '_blank');
-      } else {
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `WanderSpeak-${lang.replace(/\s+/g, '-')}-${part}.png`;
-        link.click();
-      }
+    canvas2.toBlob(blob => {
+      window.open(URL.createObjectURL(blob), '_blank');
+      completed++;
+      if (completed === 2) cleanup();
     }, 'image/png', 0.95);
-  }
+  }).catch(err => console.error('Image 2 error:', err));
   
   function cleanup() {
     document.body.removeChild(img1Container);
     document.body.removeChild(img2Container);
-    if (isMobile) {
-      alert('Two images opened! Save each one (long-press → Save Image)');
-    } else {
-      alert('Both images saved to Downloads!');
-    }
+    alert('Two images opened! Long-press each → Save Image → Save to Favorites');
   }
 }
 </script>
