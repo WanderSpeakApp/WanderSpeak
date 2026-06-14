@@ -851,7 +851,7 @@ function showFullSheet(dest) {
   // All phrases
   html += `<div class="full-section">
     <div class="full-section-head head-red">Basic Travel Phrases</div>`;
-  d.full.forEach(([en,ph]) => {
+  [...d.teaser, ...d.full].forEach(([en,ph]) => {
     html += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
   });
   html += `</div>`;
