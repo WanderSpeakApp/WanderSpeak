@@ -551,9 +551,6 @@
       </div>
     </div>
 
-    <!-- Teaser phrases -->
-    <div class="phrases-container" id="teaserPhrases"></div>
-
     <!-- Locked section -->
     <div class="locked-section" id="lockedSection">
       <div class="lock-icon">🔒</div>
@@ -634,12 +631,13 @@ const DATA = {
       ["The check, please", "La Kwen-tah, por fa-vor"],
       ["Do you speak English?", "Ah-Blah In-Glays?"],
       ["Where is the bathroom?", "Don-deh Es-tah el Ban-yo?"],
-      ["Too expensive / Discount?", "Mwy Ka-ro / Des-Kwen-to?"],
+      ["Too expensive / Discount?", "Moo-ee Ka-roh / Des-Kwen-to?"],
       ["Do you accept Credit Card?", "Ah-Sep-Tan Tar-Heh-Ta?"],
       ["Delicious / Awesome", "Ree-Ko / Cheh-Vreh"],
       ["Let's go!", "Bah-Mo-nos!"],
     ],
     numbers: ["1","Oo-No","2","Dos","3","Trays","4","Kwah-Tro","5","Seen-Ko","6","Say-Is","7","Syeh-Teh","8","O-Cho","9","Nweh-Veh","10","Dyez","100","Syen","1,000","Meel"],
+    numbersTip: "💡 How to say 41: Cuarenta (Kwar-EN-tah) + Uno (OO-no) = Kwar-EN-tah ee OO-no",
     food: [["Water","Ah-Gwah"],["Bottled Water","Ah-Gwah Em-Boh-teh-LAH-dah"],["Ice","Ee-EH-loh"],["Beer","Ser-Veh-Sah"],["Coffee (black)","Ka-Feh So-Lo"],["No dairy","Sin Lak-Teh-Os"],["No gluten","Sin gloo-TEN"],["Chicken","Po-Yo"],["Beef","Ter-Neh-Rah"],["Fish","Pes-KAH-doh"],["No shellfish","Sin Mah-rees-KOS"]],
     locations: [["Restroom","el Ban-yo"],["Restaurant","Res-tau-RAN-teh"],["Hotel","O-Tel"],["Train Station","Es-tah-SYOHN deh treh-NES"],["Airport","Ah-eh-roo-WER-toh"],["Museum","Moo-SEH-oh"],["Market","Mer-KAH-doh"],["Pharmacy","Far-MAH-see-ah"],["ATM","Kah-HEH-roh Ow-toh-MAH-tee-koh"],["Currency Exchange","Kahn-bee-oh deh Mohn-EH-dah"],["Taxi Stand","Pah-RAH-dah deh tah-SEES"]],
     culturalTips: ["Learning a few phrases shows respect — locals love when you try the language.","Dinner is typically 8-9pm. Plan meals and restaurant reservations accordingly.","Greetings matter. Always say 'Hola' or 'Buenos días' before asking questions.","Use formal titles (Señor/Señora) until invited to use first names.","Take your time with meals — they're meant for connection, not speed."],
@@ -659,36 +657,38 @@ const DATA = {
       ["The check, please", "Ah Kon-tah poor Fah-VOR"],
       ["Do you speak English?", "Voh-seh Fah-lah Een-glays?"],
       ["Where is the bathroom?", "Oh-Jee Fee-kah Bahn-yay-roo?"],
-      ["Too expensive / Final Price?", "es-Tah Moyn-toh Kah-roh / Fee-nal?"],
+      ["Too expensive / Final Price?", "es-Tah MOY-tuh Kah-roh / Fee-nal?"],
       ["Do you accept Credit Card?", "Ah-SAY-Tah KAR-TAO?"],
       ["Awesome / Let's Go!", "Legal / BOH-rah!"],
     ],
     numbers: ["1","oom","2","doyss","3","Tres","4","Kwa-troh","5","SEEN-koo","6","Savss","7","SEH-chee","8","OY-toh","9","NOH-vee","10","days","100","Sehng","1,000","mil"],
-    food: [["Water w/ ice","Agua com Zaylo"],["Bottled Water","Agua Em-boh-teh-LAH-dah"],["Ice","JEH-loh"],["Beer","Ser-Vay-zhah"],["Coffee (black)","Café PRAY-toh"],["No dairy","seng Lahk-TOH-see"],["Chicken","FRAN-goo"],["Beef","Carnee"],["Fish","Pee-SHAH-doo"],["No shellfish","Sem Mah-rees-KOZ"]],
-    locations: [["Restroom","Bahn-yay-roo"],["Restaurant","Res-toh-RAN-teh"],["Hotel","O-TEL"],["Train Station","Es-tah-SOW deh treh-NYSH"],["Airport","Ah-roh-PORT-oh"],["Museum","Moo-ZAY-oo"],["Market","Mer-KAH-doh"],["Pharmacy","Far-MAH-see-ah"],["ATM","CX-cha"],["Currency Exchange","Kahn-bee-ah deh Moe-EH-dah"],["Taxi Stand","Pon-TOH de TACK-see"]],
+    numbersTip: "💡 How to say 41: Quarenta (Kwa-REN-tah) + Um (OOM) = Kwa-REN-tah ee OOM",
+    food: [["Water w/ ice","AH-gwah com JAY-luh"],["Bottled Water","Agua Em-boh-teh-LAH-dah"],["Ice","JEH-loh"],["Beer","Ser-Vay-zhah"],["Coffee (black)","Café PRAY-toh"],["No dairy","seng Lahk-TOH-see"],["Chicken","FRAN-goo"],["Beef","KAR-neh"],["Fish","Pee-SHAH-doo"],["No shellfish","Sem Mah-rees-KOZ"]],
+    locations: [["Restroom","Bahn-yay-roo"],["Restaurant","Res-toh-RAN-teh"],["Hotel","O-TEL"],["Train Station","Esh-tah-SOW duh trens"],["Airport","Ah-roh-PORT-oh"],["Museum","Moo-ZAY-oo"],["Market","Mer-KAH-doh"],["Pharmacy","Far-MAH-see-ah"],["ATM","KAY-shah"],["Currency Exchange","Kahn-bee-ah deh Moe-EH-dah"],["Taxi Stand","Pon-TOH de TACK-see"]],
     culturalTips: ["Brazilians are warm and social — match their energy and enthusiasm.","Dinner is around 8pm. Street food is perfect for experiencing local life.","Avoid being overly formal. Brazilians prefer warmth over stiffness.","Carnival and local festivals show the vibrant culture — join in if you can!","Always greet with a smile and genuine interest."],
     currency: "Brazilian Real", rate: "1 USD = ~5 Reais", tip: "Shorthand: Remove 0, ×2, minus 10%. $18.50 USD = R$100",
   },
   french: {
     flag: "🇫🇷", title: "French Phrases",
     teaser: [
-      ["Hello / Good Morning", "Bonjour / Ohr Vwah"],
-      ["Thank You / You're Welcome", "Merci (beau coo) / De rien"],
+      ["Hello (Good Morning) / Goodbye", "Bonjour / Ohr Vwah"],
+      ["Thank You (Very Much) / You're Welcome", "Merci (beau coo) / De rien"],
       ["How much is this?", "Say Combien? / Combien Say Coot?"],
     ],
     full: [
-      ["Good Evening", "BonSwah"],
+      ["Good Evening", "Bon-SWAH"],
       ["Yes / No / I don't know", "Wee / No / Jun Say Pah"],
-      ["Please", "C Voo Play"],
+      ["Please", "See voo PLEH"],
       ["I'm Sorry / Excuse Me", "Juh Swee DeSolay / Eh skoo zay mwuah"],
-      ["Do you speak English?", "Too Pahl Ong glai?"],
-      ["Where is the bathroom?", "oo son lay twah let?"],
-      ["The check please", "le Addition, C Voo Play?"],
-      ["Can I pay by Credit Card?", "Poos Pah-yer par Cart di Credit?"],
+      ["Do you speak English?", "Tu pahl ong-GLEH?"],
+      ["Where is the bathroom?", "Oo sont lay twah-LET?"],
+      ["The check please", "Lah ah-dee-see-YON, see voo PLEH?"],
+      ["Can I pay by Credit Card?", "Pwee pah-yay par kart duh kreh-DEE?"],
       ["Beautiful / Delicious", "Belle / Deh-lee-syuh"],
     ],
-    numbers: ["1","oon","2","Deu","3","Twah","4","Caht","5","Senk","6","Sis","7","Set","8","hweet","9","Nuf","10","Dis","100","Son","1,000","Mil"],
-    food: [["Water","Loo"],["Bottled Water","Loo Em-boo-TAY"],["Ice","Glah-SOHN"],["Sparkling Water","Oo Peti Yant"],["Coffee","Cafe"],["No milk","pah du lay"],["Chicken","Poo-LAY"],["Beef","BIF"],["Fish","Pwah-SOHN"],["No shellfish","Pah duh KROO-stah-say"]],
+    numbers: ["1","oon","2","Duh","3","Twah","4","Caht","5","Senk","6","Sis","7","Set","8","WEET","9","Nuf","10","Dis","100","Son","1,000","Mil"],
+    numbersTip: "💡 How to say 41: Quarante (Ka-RAHNT) + Un (OON) = Ka-RAHNT eh OON",
+    food: [["Water","Loo"],["Bottled Water","Loo Em-boo-TAY"],["Ice","Glah-SOHN"],["Sparkling Water","Oh peh-tee-LAHNT"],["Coffee","Cafe"],["No milk","Pah duh leh"],["Chicken","Poo-LAY"],["Beef","BIF"],["Fish","Pwah-SOHN"],["No shellfish","Pah duh KROO-stah-say"]],
     locations: [["Restroom","Twah-LET"],["Restaurant","Res-toh-RAN"],["Hotel","O-TEL"],["Train Station","Gare"],["Airport","Ah-roh-PORT"],["Museum","Moo-ZAY"],["Market","Mar-SHAY"],["Pharmacy","Far-mah-SEE"],["ATM","Dis-pen-SAH-triss"],["Currency Exchange","Boo-ROH duh SHANJ"],["Taxi Stand","Stah-SYOHN deh tack-SEE"]],
     culturalTips: ["Always greet with 'Bonjour' before asking anything — it's considered rude to skip this.","Dinner is 7-8pm. Meals are social events, not rushed affairs.","Dress nicely when dining out — appearance matters in France.","Use formal speech (vous) with strangers unless invited to use informal (tu).","Take pride in the experience — food and wine are part of French culture."],
     currency: "Euro", rate: "1 USD ≈ 0.92 EUR", tip: "Tip: Not mandatory in France. Round up or leave small change.",
@@ -696,23 +696,24 @@ const DATA = {
   italian: {
     flag: "🇮🇹", title: "Italian Phrases",
     teaser: [
-      ["Hello / Good Morning", "Ciao / Bon Jour No"],
+      ["Hello / Goodbye", "Ciao / Bon Jour No"],
       ["Thank You / You're Welcome", "Grah-Zee (Mileh) / Prego"],
       ["How much is this?", "Kwanto Costa?"],
     ],
     full: [
       ["Good Evening / Good Night", "Bonna Serata / Bonna Notey"],
       ["Yes / No / I don't know", "Si / No / Non lo soh"],
-      ["Please / Nice to Meet You", "Per Fa Voray / Lee-eto D Cono"],
-      ["I'm Sorry / Excuse Me", "Mee Dis Pyah Cheh / Mi Scoozi"],
-      ["Do you speak English?", "Ley Par la Inglay zey?"],
-      ["Where is the bathroom?", "Dovey bah~no"],
+      ["Please / Nice to Meet You", "Per Fa Voray / Lee-EH-toh dee koh-noh-SHER-tee"],
+      ["I'm Sorry / Excuse Me", "Mee dees-pee-AH-cheh / Mee SKOO-zee"],
+      ["Do you speak English?", "Lay PAR-lah EEN-gleh-zeh?"],
+      ["Where is the bathroom?", "Doh-VEH eel BAH-nyo?"],
       ["The check please", "Il Conto Per Fa Voray"],
-      ["What do you recommend?", "Kay Koh Za Chee Kon Seel ya?"],
+      ["What do you recommend?", "Keh KOH-zah mee kohn-SEE-lyee?"],
       ["Beautiful / Delicious", "Bellisima / Buonissimo"],
     ],
     numbers: ["1","Oo Noh","2","Doo Eh","3","Treh","4","Kwah-Troh","5","Cheen-Kweh","6","Say","7","Seht-tey","8","Oh-Toh","9","Noh-veh","10","Dee-EH-chee","100","Chento","1,000","Meelay"],
-    food: [["Water","Ah Kwah"],["Bottled Water","Ah Kwah Em-boh-tee-AH-tah"],["Ice","GHEE-ah-choh"],["Sparkling Water","Ah kway Frizante"],["Coffee","Cafe"],["Chicken","Poh-LOH"],["Beef","KAR-neh"],["Fish","PAY-sheh"],["No shellfish","sen-zah KROO-stah-chay"],["Allergic to Milk","ah-LAIR-jee-koh al LAT-teh"]],
+    numbersTip: "💡 How to say 41: Quaranta (Kwa-RAN-tah) + Uno (OO-no) = Kwa-RAN-tah OO-no",
+    food: [["Water","Ah Kwah"],["Bottled Water","Ah Kwah Em-boh-tee-AH-tah"],["Ice","GHEE-ah-choh"],["Sparkling Water","AH-kwah freet-ZAHN-teh"],["Coffee","Cafe"],["Chicken","Poh-LOH"],["Beef","KAR-neh"],["Fish","PAY-sheh"],["No shellfish","sen-zah KROO-stah-chay"],["Allergic to Milk","ah-LAIR-jee-koh ahl LAHT-teh"]],
     locations: [["Restroom","bah-NO"],["Restaurant","Rees-toh-RAN-teh"],["Hotel","Oh-TEL"],["Train Station","Stah-zee-OH-neh FER-roh-vee-AH-ree-ah"],["Airport","Ah-roh-PORT-oh"],["Museum","Moo-SEH-oh"],["Market","Mer-KAH-toh"],["Pharmacy","Far-mah-chee-AH"],["ATM","Bahn-KO-MAT"],["Currency Exchange","Kahn-bee-ah deh VAH-loo-TAH"],["Taxi Stand","Pun-TOH TAH-see"]],
     culturalTips: ["Dinner is 8-9pm. Plan accordingly and dress nicely for dining out.","Espresso after 11am marks you as a tourist — enjoy it in the morning.","Italians are passionate and animated — don't mistake directness for rudeness.","Slow down and savor meals. Food is meant to be enjoyed, not rushed.","Learn a few Italian words — locals appreciate the effort."],
     currency: "Euro", rate: "1 USD ≈ 0.92 EUR", tip: "Cappuccino after 11am marks you as a tourist. Espresso only after lunch.",
@@ -732,11 +733,12 @@ const DATA = {
       ["Excuse me / Sorry", "Soomi-maisen"],
       ["Do you speak English?", "EhGo Wakarimaska?"],
       ["Check Please", "Okai-kay Onegai Shimass"],
-      ["Where is the bathroom?", "Tearai... wa doku deska?"],
+      ["Where is the bathroom?", "Toh-ee-REH wa doh-KOH des-KAH?"],
       ["I do not understand", "Wakari-Maisen"],
       ["Delicious!", "Oishī"],
     ],
     numbers: ["1","ichi","2","ni","3","san","4","yon","5","go","6","roku","7","nana","8","Hachi","9","Kyu/ku","10","ju","100","hyaku","1,000","sen"],
+    numbersTip: "💡 How to say 41: Yonjuu (yon-JOO) + Ichi (ee-chee) = Yon-JOO ee-chee",
     food: [["Water","Mizu"],["Bottled Water","Mizu bin"],["Ice","Koh-REE"],["Beer","Biru"],["Coffee","Koh-HEE"],["Chicken","Tori"],["Beef","Gyoo-nee-KOO"],["Fish","Sakana"],["No shellfish","Ebi, kani nuki"],["Delicious","Oishī"]],
     locations: [["Restroom","Toh-EH-toe"],["Restaurant","Res-toh-RAN"],["Hotel","Ho-teh-RU"],["Train Station","EH-kee"],["Airport","Koo-KOO"],["Museum","Hah-KOO-tsoo-KAN"],["Market","SHEE-joh"],["Pharmacy","Yah-KYU-kyoh-KU"],["ATM","EH-TEH-EMU"],["Currency Exchange","Ryoh-Gae-YA"],["Taxi Stand","TAH-koo-shee noriba"]],
     culturalTips: ["Remove shoes when entering homes, temples, and some restaurants.","Slurp noodles loudly — it's polite and shows you're enjoying the meal.","Respect personal space and avoid loud conversations in public.","Convenience stores (konbini) offer authentic, affordable local food.","Bow slightly when greeting and thanking — it shows respect."],
@@ -761,7 +763,8 @@ const DATA = {
       ["Good / Bad", "Jo ah yo / An jo ah yo"],
     ],
     numbers: ["1","ill","2","E","3","Sam","4","Sah","5","Oh","6","Yook","7","Chil","8","Pal","9","Koo","10","Shib","100","Baek","1,000","Cheon"],
-    food: [["Water","Mool"],["Bottled Water","Mul Byung"],["Ice","Uh-reum"],["Beer","Maek Joo"],["Coffee","Coppee"],["Chicken","Dak"],["Beef","Gyu-Gogi"],["Fish","Saeng-sun"],["No shellfish","Saeu-wa gge eopsi"],["Vegetarian","chae-sik-joo-eui-ja"]],
+    numbersTip: "💡 How to say 41: Saship (sah-SHIP) + Il (eel) = Sah-SHIP eel",
+    food: [["Water","Mool"],["Bottled Water","Mul Byung"],["Ice","Uh-reum"],["Beer","Maek Joo"],["Coffee","Coppee"],["Chicken","Dak"],["Beef","Gyu-Gogi"],["Fish","Saeng-sun"],["No shellfish","Saeu-wa gge eopsi"],["Vegetarian","chae-SEEK-joo-eui-jah"]],
     locations: [["Restroom","Hwa Jang Shil"],["Restaurant","Shik-dang"],["Hotel","Ho-tel"],["Train Station","Kee-Cha-Yoke"],["Airport","Gong-Hang"],["Museum","Bak-Mool-Gwan"],["Market","Shija"],["Pharmacy","Yak-Guk"],["ATM","Hyup-Ryok-Gi"],["Currency Exchange","Hwanryuk"],["Taxi Stand","Tack-shee-Seung-Cha-Jang"]],
     culturalTips: ["Show respect to elders by using formal speech and bowing slightly.","Dinner is typically 6-7pm. Street food culture is incredible — try everything!","Accept drinks and food with both hands — it's a sign of respect.","Remove shoes when entering homes and some traditional restaurants.","Korean BBQ and street markets are the heart of local culture."],
     currency: "Korean Won", rate: "10 USD = ~13,000 KRW", tip: "Remove 3 zeros, less 20%. No tipping at restaurants — go to register to pay.",
@@ -802,12 +805,6 @@ function selectDest(dest) {
   document.getElementById('sheetTitle').textContent = d.title;
 
   // Build teaser phrases
-  let html = '';
-  d.teaser.forEach(([en,ph]) => {
-    html += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
-  });
-  document.getElementById('teaserPhrases').innerHTML = html;
-
   // Check if email already submitted (from localStorage)
   if (hasSubmittedEmail()) {
     // Email already submitted — show full sheet for ANY language
@@ -854,7 +851,7 @@ function showFullSheet(dest) {
   // All phrases
   html += `<div class="full-section">
     <div class="full-section-head head-red">Basic Travel Phrases</div>`;
-  [...d.teaser, ...d.full].forEach(([en,ph]) => {
+  d.full.forEach(([en,ph]) => {
     html += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
   });
   html += `</div>`;
@@ -868,7 +865,7 @@ function showFullSheet(dest) {
   });
   html += `</div>
     <div style="padding:12px 16px;font-size:12px;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.06);">
-      💡 <strong>Combine numbers:</strong> Most languages combine 40 + 1 to make 41. Check your language's pattern!
+      ${d.numbersTip || '💡 <strong>Combine numbers:</strong> Most languages combine 40 + 1 to make 41. Check your language pattern!'}
     </div>
   </div>`;
 
