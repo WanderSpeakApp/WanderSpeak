@@ -18,7 +18,7 @@
     --teal: #2ECC9A;
     --teal-dk: #1FA87E;
     --gold: #F0A500;
-    --red: #C0392B;
+    --red: #E63946;
     --white: #FFFFFF;
     --off-white: #F0EEF8;
     --gray: #8884AA;
@@ -142,13 +142,15 @@
   }
   .dest-btn:hover { border-color: var(--teal); background: rgba(46,204,154,0.08); transform: translateY(-2px); }
   .dest-btn.active {
-    border-color: var(--teal); background: rgba(46,204,154,0.12);
-    box-shadow: 0 0 0 3px rgba(46,204,154,0.15);
+    border-color: white; background: white;
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
   }
   .dest-btn.active::after {
     content: '✓'; position: absolute; top: 8px; right: 10px;
-    font-size: 12px; color: var(--teal); font-weight: 700;
+    font-size: 12px; color: var(--purple); font-weight: 700;
   }
+  .dest-btn.active .dest-name { color: var(--purple); }
+  .dest-btn.active .dest-lang { color: #666; }
   .dest-flag { font-size: 48px; display: block; margin-bottom: 8px; }
   .dest-name { font-size: 16px; color: rgba(255,255,255,0.8); font-weight: 600; }
   .dest-lang { font-size: 13px; color: var(--gray); margin-top: 4px; }
@@ -160,14 +162,14 @@
   .sheet-header {
     background: linear-gradient(135deg, var(--purple), var(--purple-md));
     border-radius: 20px 20px 0 0;
-    padding: 20px;
-    display: flex; align-items: center; gap: 14px;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
     border: 1px solid rgba(255,255,255,0.1);
     border-bottom: none;
   }
-  .sheet-flag { font-size: 40px; }
-  .sheet-title { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 700; }
-  .sheet-sub { font-size: 12px; color: var(--teal); margin-top: 2px; }
+  .sheet-flag { font-size: 32px; }
+  .sheet-title { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700; }
+  .sheet-sub { font-size: 11px; color: var(--teal); margin-top: 1px; }
 
   .phrases-container {
     background: rgba(255,255,255,0.03);
@@ -186,13 +188,13 @@
   .phrase-row:last-child { border-bottom: none; }
   .phrase-row:hover { background: rgba(255,255,255,0.04); }
   .p-en {
-    padding: 14px 16px; font-size: 13px;
+    padding: 16px 16px; font-size: 15px;
     color: rgba(255,255,255,0.55);
     border-right: 1px solid rgba(255,255,255,0.06);
     line-height: 1.4;
   }
   .p-ph {
-    padding: 14px 16px; font-size: 13px;
+    padding: 16px 16px; font-size: 15px;
     font-weight: 600; color: var(--teal); line-height: 1.4;
   }
 
@@ -313,7 +315,7 @@
   }
   .head-red { background: var(--red); }
   .head-orange { background: #D35400; }
-  .head-blue { background: #1A5276; }
+  .head-blue { background: #0077B6; }
   .head-purple { background: #7D3C98; }
   .head-green { background: #1E8449; }
   .head-pink { background: #C2185B; }
@@ -508,7 +510,7 @@
   <p class="section-label">Choose your destination</p>
   <div class="dest-grid" id="destGrid">
     <button class="dest-btn" onclick="selectDest('spanish')" id="btn-spanish">
-      <span class="dest-flag">🇪🇸</span>
+      <span class="dest-flag">🇪🇸🇲🇽</span>
       <div class="dest-name">Spain / Latin America</div>
       <div class="dest-lang">Spanish</div>
     </button>
