@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WanderSpeak — Sound like a local. Travel like one too.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="2382bb42-f5d6-48db-97fd-98bdd16e93a3"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="//embed.typeform.com/next/embed.js"></script>
+<style>
+  :root {
+    --purple: #534AB7;
+    --purple-dk: #26215C;
+    --purple-md: #3C3489;
+    --purple-lt: #6B63CC;
+    --teal: #2ECC9A;
+    --teal-dk: #1FA87E;
+    --gold: #F0A500;
+    --red: #E63946;
+    --white: #FFFFFF;
+    --off-white: #F0EEF8;
+    --gray: #8884AA;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--purple-dk);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── BACKGROUND ORBS ── */
+  .bg-orbs {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); opacity: 0.18;
+  }
+  .orb-1 { width: 500px; height: 500px; background: var(--teal); top: -100px; right: -100px; animation: float1 8s ease-in-out infinite; }
+  .orb-2 { width: 600px; height: 600px; background: var(--purple); bottom: -150px; left: -150px; animation: float2 10s ease-in-out infinite; }
+  .orb-3 { width: 300px; height: 300px; background: var(--gold); top: 40%; left: 40%; animation: float3 12s ease-in-out infinite; }
+
+  @keyframes float1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,30px)} }
+  @keyframes float2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,-30px)} }
+  @keyframes float3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-20px,20px)} }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 480px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(38,33,92,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark {
+    width: 38px; height: 38px; background: var(--purple);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .logo-mark svg { width: 24px; height: 24px; }
+  .logo-dot {
+    position: absolute; bottom: -3px; right: -3px;
+    width: 11px; height: 11px; background: var(--teal);
+    border-radius: 50%; border: 2px solid var(--purple-dk);
+  }
+  .logo-text { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 18px; color: var(--white); }
+  .logo-text span { color: var(--teal); }
+  .nav-ig {
+    font-size: 13px; color: var(--teal); text-decoration: none;
+    font-weight: 500; opacity: 0.85; transition: opacity 0.2s;
+  }
+  .nav-ig:hover { opacity: 1; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 60px 0 40px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(46,204,154,0.12);
+    border: 1px solid rgba(46,204,154,0.3);
+    color: var(--teal);
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 20px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 48px; font-weight: 900;
+    line-height: 1.05; letter-spacing: -1px;
+    margin-bottom: 8px;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+  .hero h1 em { color: var(--teal); font-style: normal; }
+  .hero-sub {
+    font-size: 16px; color: rgba(255,255,255,0.65);
+    line-height: 1.6; margin-bottom: 32px;
+    font-weight: 300;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+  .hero-tagline {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px; font-weight: 600;
+    color: var(--white); margin-bottom: 6px;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* ── DESTINATION PICKER ── */
+  .section-label {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gray); margin-bottom: 14px; font-weight: 500;
+  }
+  .dest-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 10px; margin-bottom: 32px;
+  }
+  .dest-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 20px 16px;
+    cursor: pointer; text-align: center;
+    transition: all 0.2s; position: relative; overflow: hidden;
+  }
+  .dest-btn:hover { border-color: var(--teal); background: rgba(46,204,154,0.08); transform: translateY(-2px); }
+  .dest-btn.active {
+    border-color: white; background: white;
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+  }
+  .dest-btn.active::after {
+    content: '✓'; position: absolute; top: 8px; right: 10px;
+    font-size: 12px; color: var(--purple); font-weight: 700;
+  }
+  .dest-btn.active .dest-name { color: var(--purple); }
+  .dest-btn.active .dest-lang { color: #666; }
+  .dest-flag { font-size: 48px; display: block; margin-bottom: 8px; }
+  .dest-name { font-size: 16px; color: rgba(255,255,255,0.8); font-weight: 600; }
+  .dest-lang { font-size: 13px; color: var(--gray); margin-top: 4px; }
+
+  /* ── PHRASE SHEET ── */
+  .phrase-sheet { display: none; animation: fadeUp 0.4s ease both; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
+  .phrase-sheet.visible { display: block; }
+
+  .sheet-header {
+    background: linear-gradient(135deg, var(--purple), var(--purple-md));
+    border-radius: 20px 20px 0 0;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-bottom: none;
+  }
+  .sheet-flag { font-size: 32px; }
+  .sheet-title { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700; }
+  .sheet-sub { font-size: 11px; color: var(--teal); margin-top: 1px; }
+
+  .phrases-container {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-top: none;
+    border-radius: 0 0 20px 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .phrase-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.15s;
+  }
+  .phrase-row:last-child { border-bottom: none; }
+  .phrase-row:hover { background: rgba(255,255,255,0.04); }
+  .p-en {
+    padding: 16px 16px; font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    line-height: 1.4;
+  }
+  .p-ph {
+    padding: 16px 16px; font-size: 15px;
+    font-weight: 600; color: var(--teal); line-height: 1.4;
+  }
+
+  /* ── LOCKED SECTION ── */
+  .locked-section {
+    background: linear-gradient(180deg, rgba(38,33,92,0) 0%, rgba(38,33,92,0.98) 40%);
+    border-radius: 0 0 20px 20px;
+    padding: 60px 24px 32px;
+    text-align: center;
+    margin-top: -80px;
+    position: relative;
+  }
+  .lock-icon {
+    width: 52px; height: 52px;
+    background: rgba(83,74,183,0.4);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px; font-size: 22px;
+  }
+  .locked-title {
+    font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .locked-sub { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 24px; line-height: 1.5; }
+
+  /* ── EMAIL FORM ── */
+  .email-form { display: flex; flex-direction: column; gap: 10px; }
+  .email-input {
+    width: 100%; padding: 16px 20px;
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 14px; color: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 15px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .email-input::placeholder { color: rgba(255,255,255,0.35); }
+  .email-input:focus { border-color: var(--teal); }
+  .submit-btn {
+    width: 100%; padding: 16px;
+    background: var(--teal); color: var(--purple-dk);
+    border: none; border-radius: 14px;
+    font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; letter-spacing: 0.3px;
+  }
+  .submit-btn:hover { background: var(--teal-dk); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(46,204,154,0.3); }
+  .submit-btn:active { transform: translateY(0); }
+
+  /* ── BEEHIIV FORM STYLING ── */
+  #beehiivForm { margin: 0 auto; max-width: 100%; }
+  #beehiivForm .bhc-embed { margin: 0; }
+  .bhc-embed form { display: flex; flex-direction: column; gap: 10px; }
+  .bhc-embed input[type="email"] { 
+    width: 100% !important; padding: 16px 20px !important;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1.5px solid rgba(255,255,255,0.15) !important;
+    border-radius: 14px !important; color: var(--white) !important;
+    font-family: 'DM Sans', sans-serif !important; font-size: 15px !important;
+    outline: none !important; transition: border-color 0.2s !important;
+  }
+  .bhc-embed input[type="email"]::placeholder { color: rgba(255,255,255,0.35) !important; }
+  .bhc-embed input[type="email"]:focus { border-color: var(--teal) !important; }
+  .bhc-embed button[type="submit"] { 
+    width: 100% !important; padding: 16px !important;
+    background: var(--teal) !important; color: var(--purple-dk) !important;
+    border: none !important; border-radius: 14px !important;
+    font-family: 'Outfit', sans-serif !important; font-size: 16px !important; font-weight: 700 !important;
+    cursor: pointer !important; transition: all 0.2s !important; letter-spacing: 0.3px !important;
+    text-transform: none !important;
+  }
+  .bhc-embed button[type="submit"]:hover { 
+    background: var(--teal-dk) !important; transform: translateY(-1px) !important; 
+    box-shadow: 0 8px 24px rgba(46,204,154,0.3) !important; 
+  }
+  .bhc-embed button[type="submit"]:active { transform: translateY(0) !important; }
+  .bhc-embed .form-note, .bhc-embed p { 
+    font-size: 12px !important; color: rgba(255,255,255,0.5) !important; margin-top: 8px !important;
+  }
+  .bhc-embed .bhc-header { display: none !important; }
+  .bhc-embed .bhc-description { color: rgba(255,255,255,0.6) !important; font-size: 14px !important; margin-bottom: 16px !important; }
+
+  .form-note { font-size: 11px; color: var(--gray); text-align: center; }
+
+  /* ── SUCCESS STATE ── */
+  .success-state {
+    display: none; text-align: center; padding: 32px 24px;
+    animation: fadeUp 0.4s ease both;
+  }
+  .success-state.visible { display: block; }
+  .success-icon { font-size: 48px; margin-bottom: 16px; }
+  .success-title { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+  .success-sub { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+
+  /* ── FULL SHEET (post unlock) ── */
+  .full-sheet { display: none; }
+  .full-sheet.visible { display: block; animation: fadeUp 0.4s ease both; }
+  .section-tag {
+    display: inline-block; padding: 4px 12px;
+    border-radius: 20px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .tag-red { background: rgba(192,57,43,0.2); color: #E74C3C; }
+  .tag-orange { background: rgba(211,84,0,0.2); color: #E67E22; }
+  .tag-blue { background: rgba(41,128,185,0.2); color: #3498DB; }
+  .tag-purple { background: rgba(125,60,152,0.2); color: #9B59B6; }
+  .tag-green { background: rgba(30,132,73,0.2); color: #2ECC71; }
+
+  .full-section {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; overflow: hidden; margin-bottom: 16px;
+  }
+  .full-section-head {
+    padding: 12px 16px; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.5px; text-transform: uppercase; color: white;
+    text-align: center;
+  }
+  .head-red { background: var(--red); }
+  .head-orange { background: #D35400; }
+  .head-blue { background: #0077B6; }
+  .head-purple { background: #7D3C98; }
+  .head-green { background: #1E8449; }
+  .head-pink { background: #C2185B; }
+
+  .num-grid { display: grid; grid-template-columns: repeat(4,1fr); }
+  .num-cell {
+    padding: 10px 6px; text-align: center; font-size: 12px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.5);
+  }
+  .num-cell:nth-child(4n) { border-right: none; }
+  .num-val { font-weight: 600; color: var(--teal); }
+  .currency-box {
+    padding: 14px 16px; background: rgba(30,132,73,0.15);
+    border-top: 1px solid rgba(30,132,73,0.3);
+    font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.6;
+  }
+  .currency-rate { font-weight: 700; color: var(--teal); font-size: 15px; }
+
+  .tip-item {
+    padding: 10px 16px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .tip-item:last-child { border-bottom: none; }
+
+  .save-btn {
+    width: 100%; padding: 18px 16px;
+    background: var(--teal); color: #26215C;
+    border: none;
+    border-radius: 14px; font-family: 'Outfit', sans-serif;
+    font-size: 18px; font-weight: 700; cursor: pointer;
+    transition: all 0.3s; margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 4px 16px rgba(46, 204, 154, 0.3);
+  }
+  .save-btn:hover { 
+    background: #24b896;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(46, 204, 154, 0.5);
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-section { padding: 48px 0; text-align: center; }
+  .how-title { font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .how-sub { font-size: 14px; color: var(--gray); margin-bottom: 32px; }
+  .how-steps { display: flex; flex-direction: column; gap: 16px; text-align: left; }
+  .how-step {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 18px;
+  }
+  .step-num {
+    width: 36px; height: 36px; min-width: 36px;
+    background: var(--purple); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 16px;
+    color: var(--teal);
+  }
+  .step-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+  /* ── LANGUAGES COMING SOON ── */
+  .coming-section { padding: 32px 0; text-align: center; }
+  .lang-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 20px; }
+  .coming-title { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+  .coming-sub { font-size: 13px; color: var(--gray); margin-bottom: 20px; }
+  .lang-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .lang-pill {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 8px 14px;
+    font-size: 13px; display: flex; align-items: center; gap: 6px;
+  }
+  .lang-pill.live { border-color: var(--teal); color: var(--teal); background: rgba(46,204,154,0.08); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 32px 24px; text-align: center;
+  }
+  .footer-logo { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 20px; margin-bottom: 8px; }
+  .footer-logo span { color: var(--teal); }
+  .footer-tagline { font-size: 13px; color: var(--gray); margin-bottom: 16px; }
+  .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 16px; }
+  .footer-link { font-size: 13px; color: var(--gray); text-decoration: none; transition: color 0.2s; }
+  .footer-link:hover { color: var(--teal); }
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,0.2); }
+
+  /* ── UTILITY ── */
+  .divider { height: 1px; background: rgba(255,255,255,0.08); margin: 32px 0; }
+  .text-teal { color: var(--teal); }
+  .mt-8 { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-24 { margin-top: 24px; }
+
+  /* ── FEEDBACK SECTION ── */
+  .feedback-section {
+    text-align: center;
+    padding: 40px 0;
+  }
+  .feedback-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 28px; font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+  .feedback-sub {
+    font-size: 15px; color: rgba(255,255,255,0.65);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .typeform-embed-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none">
+        <polyline points="3,6 7.5,18 12,10 16.5,18 21,6" stroke="white" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+      <div class="logo-dot"></div>
+    </div>
+    <span class="logo-text">Wander<span>Speak</span></span>
+  </a>
+  <a href="https://instagram.com/wanderspeak" target="_blank" class="nav-ig">@WanderSpeak</a>
+</nav>
+
+<!-- HERO -->
+<div class="container">
+  <section class="hero">
+    <div class="hero-eyebrow">✈️ Free Phonetic Phrase Sheets</div>
+    <h1>Sound like a<br><em>local.</em></h1>
+    <p class="hero-sub">Phonetic phrases for English speaking travelers. Every word spelled out so you can actually say it — no studying, no app, no wifi needed.</p>
+    <p class="hero-tagline">Pick your destination below 👇</p>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <div class="divider"></div>
+  <section class="how-section">
+    <h2 class="how-title">How it works</h2>
+    <p class="how-sub">No language degree required.</p>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Pick your destination</div>
+          <div class="step-desc">Choose from our growing list of countries — more added every week.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">Get your free phrase sheet</div>
+          <div class="step-desc">Read as you would in English. Every word spelled out phonetically.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Save it to your phone</div>
+          <div class="step-desc">Screenshot it, save it to your camera roll. Works offline. No app or wifi needed when you land.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Sound like a local</div>
+          <div class="step-desc">Your effort to speak the language earns goodwill. You don't need to be perfect — just try.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESTINATION PICKER -->
+  <p class="section-label">Choose your destination</p>
+  <div class="dest-grid" id="destGrid">
+    <button class="dest-btn" onclick="selectDest('spanish')" id="btn-spanish">
+      <span class="dest-flag">🇪🇸🇲🇽</span>
+      <div class="dest-name">Spain / Latin America</div>
+      <div class="dest-lang">Spanish</div>
+    </button>
+    <button class="dest-btn" onclick="selectDest('portuguese')" id="btn-portuguese">
+      <span class="dest-flag">🇧🇷🇵🇹</span>
+      <div class="dest-name">Brazil / Portugal</div>
+      <div class="dest-lang">Portuguese</div>
+    </button>
+    <button class="dest-btn" onclick="selectDest('french')" id="btn-french">
+      <span class="dest-flag">🇫🇷</span>
+      <div class="dest-name">France</div>
+      <div class="dest-lang">French</div>
+    </button>
+    <button class="dest-btn" onclick="selectDest('italian')" id="btn-italian">
+      <span class="dest-flag">🇮🇹</span>
+      <div class="dest-name">Italy</div>
+      <div class="dest-lang">Italian</div>
+    </button>
+    <button class="dest-btn" onclick="selectDest('japanese')" id="btn-japanese">
+      <span class="dest-flag">🇯🇵</span>
+      <div class="dest-name">Japan</div>
+      <div class="dest-lang">Japanese</div>
+    </button>
+    <button class="dest-btn" onclick="selectDest('korean')" id="btn-korean">
+      <span class="dest-flag">🇰🇷</span>
+      <div class="dest-name">Korea</div>
+      <div class="dest-lang">Korean</div>
+    </button>
+  </div>
+
+  <!-- PHRASE SHEET -->
+  <div class="phrase-sheet" id="phraseSheet">
+
+    <!-- Sheet header -->
+    <div class="sheet-header" id="sheetHeader">
+      <span class="sheet-flag" id="sheetFlag"></span>
+      <div>
+        <div class="sheet-title" id="sheetTitle"></div>
+        <div class="sheet-sub">Phonetic Spelling — Read it like English</div>
+      </div>
+    </div>
+
+    <!-- Locked section -->
+    <div class="locked-section" id="lockedSection">
+      <div class="lock-icon">🔒</div>
+      <div class="locked-title">Get the full phrase sheet</div>
+      <div class="locked-sub">30+ phrases, numbers, food, locations, dietary needs & currency tips — all phonetically spelled. Free.</div>
+
+      <div id="beehiivForm">
+        <div data-beehiiv-form="2382bb42-f5d6-48db-97fd-98bdd16e93a3"></div>
+        <button class="submit-btn" onclick="unlockSheet()" style="margin-top: 14px;">✓ I've submitted my email</button>
+      </div>
+
+      <div class="success-state" id="successState">
+        <div class="success-icon">🎉</div>
+        <div class="success-title">You're in!</div>
+        <div class="success-sub">Your full phrase sheet is loading below. Save it to your phone before your trip.</div>
+      </div>
+    </div>
+
+    <!-- Full sheet (post unlock) -->
+    <div class="full-sheet mt-24" id="fullSheet"></div>
+
+  </div>
+
+  <!-- COMING SOON -->
+  <div class="divider"></div>
+  <section class="coming-section">
+    <h2 class="coming-title">More languages coming 🌍</h2>
+    <p class="coming-sub">New destination dropping every week. Follow @WanderSpeak to stay updated.</p>
+    <div class="lang-pills">
+      <div class="lang-pill">🇻🇳 Vietnamese</div>
+      <div class="lang-pill">🇩🇪 German</div>
+      <div class="lang-pill">🇬🇷 Greek</div>
+      <div class="lang-pill">🇹🇭 Thai</div>
+      <div class="lang-pill">🇳🇱 Dutch</div>
+    </div>
+    <a href="https://form.typeform.com/to/fF85BPwV" target="_blank" style="display:inline-block;margin-top:20px;padding:12px 28px;background:var(--teal);color:#26215C;font-weight:600;border-radius:8px;text-decoration:none;font-size:14px;transition:all 0.2s">📝 Request a Language</a>
+  </section>
+
+  <div class="divider"></div>
+</div>
+
+
+  <!-- GIVE US FEEDBACK -->
+  <div class="divider"></div>
+  <section class="feedback-section">
+    <h2 class="feedback-title">Give Us Feedback</h2>
+    <p class="feedback-sub">Help us improve! Tell us what phrases you needed, what worked well, or what languages you'd like next.</p>
+    <div class="typeform-embed-container">
+      <div data-tf-widget="fF85BPwV" data-tf-opacity="0" data-tf-iframe-props="title=WanderSpeak Feedback" data-tf-transitive-search-params data-tf-medium="snippet"></div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Wander<span>Speak</span></div>
+  <div class="footer-tagline">Sound like a local. Travel like one too. ✈️</div>
+  <div class="footer-links">
+    <a href="https://instagram.com/wanderspeak" target="_blank" class="footer-link">Instagram</a>
+    <a href="mailto:hello@getwanderspeak.com" class="footer-link">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 WanderSpeak. All rights reserved.</div>
+</footer>
+
+<script>
+const DATA = {
+  spanish: {
+    flag: "🇪🇸", title: "Spanish Phrases",
+    teaser: [
+      ["Hello / Goodbye", "Oh-lah / Ah-Dee-OS"],
+      ["Thank You / You're Welcome", "Gra-syas / Den-ah-dah"],
+      ["How much is this?", "Kwan-toh Kwes-tah Es-toh?"],
+    ],
+    full: [
+      ["Good Morning / Evening", "Bweh-nos Dee-as / No-ches"],
+      ["Yes / No / No Problem", "See / No / No Aye Pro-Blem-ah"],
+      ["Sorry / Excuse Me / Please", "Lo Syen-to / Per-Don / Por Fa-Vor"],
+      ["The check, please", "La Kwen-tah, por fa-vor"],
+      ["Do you speak English?", "Ah-Blah In-Glays?"],
+      ["Where is the bathroom?", "Don-deh Es-tah el Ban-yo?"],
+      ["Too expensive / Discount?", "Moo-ee Ka-roh / Des-Kwen-to?"],
+      ["Do you accept Credit Card?", "Ah-Sep-Tan Tar-Heh-Ta?"],
+      ["Delicious / Awesome", "Ree-Ko / Cheh-Vreh"],
+      ["Let's go!", "Bah-Mo-nos!"],
+    ],
+    numbers: ["1","Oo-No","2","Dos","3","Trays","4","Kwah-Tro","5","Seen-Ko","6","Say-Is","7","Syeh-Teh","8","O-Cho","9","Nweh-Veh","10","Dyez","100","Syen","1,000","Meel"],
+    numbersTip: "💡 How to say 41: Cuarenta (Kwar-EN-tah) + Uno (OO-no) = Kwar-EN-tah ee OO-no",
+    food: [["Water","Ah-Gwah"],["Bottled Water","Ah-Gwah Em-Boh-teh-LAH-dah"],["Ice","Ee-EH-loh"],["Beer","Ser-Veh-Sah"],["Coffee (black)","Ka-Feh So-Lo"],["No dairy","Sin Lak-Teh-Os"],["No gluten","Sin gloo-TEN"],["Chicken","Po-Yo"],["Beef","Ter-Neh-Rah"],["Fish","Pes-KAH-doh"],["No shellfish","Sin Mah-rees-KOS"]],
+    locations: [["Restroom","el Ban-yo"],["Restaurant","Res-tau-RAN-teh"],["Hotel","O-Tel"],["Train Station","Es-tah-SYOHN deh treh-NES"],["Airport","Ah-eh-roo-WER-toh"],["Museum","Moo-SEH-oh"],["Market","Mer-KAH-doh"],["Pharmacy","Far-MAH-see-ah"],["ATM","Kah-HEH-roh Ow-toh-MAH-tee-koh"],["Currency Exchange","Kahn-bee-oh deh Mohn-EH-dah"],["Taxi Stand","Pah-RAH-dah deh tah-SEES"]],
+    culturalTips: ["Learning a few phrases shows respect — locals love when you try the language.","Dinner is typically 8-9pm. Plan meals and restaurant reservations accordingly.","Greetings matter. Always say 'Hola' or 'Buenos días' before asking questions.","Use formal titles (Señor/Señora) until invited to use first names.","Take your time with meals — they're meant for connection, not speed."],
+    currency: "Euro (Spain) / Peso (LatAm)", rate: "1 USD ≈ 0.92 EUR / ~17 MXN", tip: "Tip: 5-10% in restaurants in Spain. Not expected in Mexico.",
+  },
+  portuguese: {
+    flag: "🇧🇷🇵🇹", title: "Portuguese Phrases",
+    teaser: [
+      ["Hello / Goodbye", "Oy / Chow"],
+      ["Thank You / You're Welcome", "Oh-bree-Gah-Dah / Jee Nah-dah"],
+      ["How much is this?", "Kwan-toh Koo-Stah?"],
+    ],
+    full: [
+      ["Good Morning / Evening", "Bohm Jee-Ah / Boh-Ah Noy-Chee"],
+      ["Yes / No / No Problem", "Seeng / Nao / Seng Pro-Blay-mah"],
+      ["Sorry / Excuse Me / Please", "Dess-kool-pah / Poor Fah-Vor"],
+      ["The check, please", "Ah Kon-tah poor Fah-VOR"],
+      ["Do you speak English?", "Voh-seh Fah-lah Een-glays?"],
+      ["Where is the bathroom?", "Oh-Jee Fee-kah Bahn-yay-roo?"],
+      ["Too expensive / Final Price?", "es-Tah MOY-tuh Kah-roh / Fee-nal?"],
+      ["Do you accept Credit Card?", "Ah-SAY-Tah KAR-TAO?"],
+      ["Awesome / Let's Go!", "Legal / BOH-rah!"],
+    ],
+    numbers: ["1","oom","2","doyss","3","Tres","4","Kwa-troh","5","SEEN-koo","6","Savss","7","SEH-chee","8","OY-toh","9","NOH-vee","10","days","100","Sehng","1,000","mil"],
+    numbersTip: "💡 How to say 41: Quarenta (Kwa-REN-tah) + Um (OOM) = Kwa-REN-tah ee OOM",
+    food: [["Water w/ ice","AH-gwah com JAY-luh"],["Bottled Water","Agua Em-boh-teh-LAH-dah"],["Ice","JEH-loh"],["Beer","Ser-Vay-zhah"],["Coffee (black)","Café PRAY-toh"],["No dairy","seng Lahk-TOH-see"],["Chicken","FRAN-goo"],["Beef","KAR-neh"],["Fish","Pee-SHAH-doo"],["No shellfish","Sem Mah-rees-KOZ"]],
+    locations: [["Restroom","Bahn-yay-roo"],["Restaurant","Res-toh-RAN-teh"],["Hotel","O-TEL"],["Train Station","Esh-tah-SOW duh trens"],["Airport","Ah-roh-PORT-oh"],["Museum","Moo-ZAY-oo"],["Market","Mer-KAH-doh"],["Pharmacy","Far-MAH-see-ah"],["ATM","KAY-shah"],["Currency Exchange","Kahn-bee-ah deh Moe-EH-dah"],["Taxi Stand","Pon-TOH de TACK-see"]],
+    culturalTips: ["Brazilians are warm and social — match their energy and enthusiasm.","Dinner is around 8pm. Street food is perfect for experiencing local life.","Avoid being overly formal. Brazilians prefer warmth over stiffness.","Carnival and local festivals show the vibrant culture — join in if you can!","Always greet with a smile and genuine interest."],
+    currency: "Brazilian Real", rate: "1 USD = ~5 Reais", tip: "Shorthand: Remove 0, ×2, minus 10%. $18.50 USD = R$100",
+  },
+  french: {
+    flag: "🇫🇷", title: "French Phrases",
+    teaser: [
+      ["Hello (Good Morning) / Goodbye", "Bonjour / Ohr Vwah"],
+      ["Thank You (Very Much) / You're Welcome", "Merci (beau coo) / De rien"],
+      ["How much is this?", "Say Combien? / Combien Say Coot?"],
+    ],
+    full: [
+      ["Good Evening", "Bon-SWAH"],
+      ["Yes / No / I don't know", "Wee / No / Jun Say Pah"],
+      ["Please", "See voo PLEH"],
+      ["I'm Sorry / Excuse Me", "Juh Swee DeSolay / Eh skoo zay mwuah"],
+      ["Do you speak English?", "Tu pahl ong-GLEH?"],
+      ["Where is the bathroom?", "Oo sont lay twah-LET?"],
+      ["The check please", "Lah ah-dee-see-YON, see voo PLEH?"],
+      ["Can I pay by Credit Card?", "Pwee pah-yay par kart duh kreh-DEE?"],
+      ["Beautiful / Delicious", "Belle / Deh-lee-syuh"],
+    ],
+    numbers: ["1","oon","2","Duh","3","Twah","4","Caht","5","Senk","6","Sis","7","Set","8","WEET","9","Nuf","10","Dis","100","Son","1,000","Mil"],
+    numbersTip: "💡 How to say 41: Quarante (Ka-RAHNT) + Un (OON) = Ka-RAHNT eh OON",
+    food: [["Water","Loo"],["Bottled Water","Loo Em-boo-TAY"],["Ice","Glah-SOHN"],["Sparkling Water","Oh peh-tee-LAHNT"],["Coffee","Cafe"],["No milk","Pah duh leh"],["Chicken","Poo-LAY"],["Beef","BIF"],["Fish","Pwah-SOHN"],["No shellfish","Pah duh KROO-stah-say"]],
+    locations: [["Restroom","Twah-LET"],["Restaurant","Res-toh-RAN"],["Hotel","O-TEL"],["Train Station","Gare"],["Airport","Ah-roh-PORT"],["Museum","Moo-ZAY"],["Market","Mar-SHAY"],["Pharmacy","Far-mah-SEE"],["ATM","Dis-pen-SAH-triss"],["Currency Exchange","Boo-ROH duh SHANJ"],["Taxi Stand","Stah-SYOHN deh tack-SEE"]],
+    culturalTips: ["Always greet with 'Bonjour' before asking anything — it's considered rude to skip this.","Dinner is 7-8pm. Meals are social events, not rushed affairs.","Dress nicely when dining out — appearance matters in France.","Use formal speech (vous) with strangers unless invited to use informal (tu).","Take pride in the experience — food and wine are part of French culture."],
+    currency: "Euro", rate: "1 USD ≈ 0.92 EUR", tip: "Tip: Not mandatory in France. Round up or leave small change.",
+  },
+  italian: {
+    flag: "🇮🇹", title: "Italian Phrases",
+    teaser: [
+      ["Hello / Goodbye", "Ciao / Bon Jour No"],
+      ["Thank You / You're Welcome", "Grah-Zee (Mileh) / Prego"],
+      ["How much is this?", "Kwanto Costa?"],
+    ],
+    full: [
+      ["Good Evening / Good Night", "Bonna Serata / Bonna Notey"],
+      ["Yes / No / I don't know", "Si / No / Non lo soh"],
+      ["Please / Nice to Meet You", "Per Fa Voray / Lee-EH-toh dee koh-noh-SHER-tee"],
+      ["I'm Sorry / Excuse Me", "Mee dees-pee-AH-cheh / Mee SKOO-zee"],
+      ["Do you speak English?", "Lay PAR-lah EEN-gleh-zeh?"],
+      ["Where is the bathroom?", "Doh-VEH eel BAH-nyo?"],
+      ["The check please", "Il Conto Per Fa Voray"],
+      ["What do you recommend?", "Keh KOH-zah mee kohn-SEE-lyee?"],
+      ["Beautiful / Delicious", "Bellisima / Buonissimo"],
+    ],
+    numbers: ["1","Oo Noh","2","Doo Eh","3","Treh","4","Kwah-Troh","5","Cheen-Kweh","6","Say","7","Seht-tey","8","Oh-Toh","9","Noh-veh","10","Dee-EH-chee","100","Chento","1,000","Meelay"],
+    numbersTip: "💡 How to say 41: Quaranta (Kwa-RAN-tah) + Uno (OO-no) = Kwa-RAN-tah OO-no",
+    food: [["Water","Ah Kwah"],["Bottled Water","Ah Kwah Em-boh-tee-AH-tah"],["Ice","GHEE-ah-choh"],["Sparkling Water","AH-kwah freet-ZAHN-teh"],["Coffee","Cafe"],["Chicken","Poh-LOH"],["Beef","KAR-neh"],["Fish","PAY-sheh"],["No shellfish","sen-zah KROO-stah-chay"],["Allergic to Milk","ah-LAIR-jee-koh ahl LAHT-teh"]],
+    locations: [["Restroom","bah-NO"],["Restaurant","Rees-toh-RAN-teh"],["Hotel","Oh-TEL"],["Train Station","Stah-zee-OH-neh FER-roh-vee-AH-ree-ah"],["Airport","Ah-roh-PORT-oh"],["Museum","Moo-SEH-oh"],["Market","Mer-KAH-toh"],["Pharmacy","Far-mah-chee-AH"],["ATM","Bahn-KO-MAT"],["Currency Exchange","Kahn-bee-ah deh VAH-loo-TAH"],["Taxi Stand","Pun-TOH TAH-see"]],
+    culturalTips: ["Dinner is 8-9pm. Plan accordingly and dress nicely for dining out.","Espresso after 11am marks you as a tourist — enjoy it in the morning.","Italians are passionate and animated — don't mistake directness for rudeness.","Slow down and savor meals. Food is meant to be enjoyed, not rushed.","Learn a few Italian words — locals appreciate the effort."],
+    currency: "Euro", rate: "1 USD ≈ 0.92 EUR", tip: "Cappuccino after 11am marks you as a tourist. Espresso only after lunch.",
+  },
+  japanese: {
+    flag: "🇯🇵", title: "Japanese Phrases",
+    teaser: [
+      ["Hello / Goodbye", "Konnichiwa / Sayōnara"],
+      ["Thank You / You're Welcome", "(Domo) Arigato Gozaimass / Do Itashimaste"],
+      ["How much is this?", "Korewa ikura deska?"],
+    ],
+    full: [
+      ["Good Morning", "ohayō gozaimass"],
+      ["Good Night / Evening", "oyasumi nasai / Konbanwa"],
+      ["Yes / No", "Hai / iiye"],
+      ["Please", "Onegai Shimass"],
+      ["Excuse me / Sorry", "Soomi-maisen"],
+      ["Do you speak English?", "EhGo Wakarimaska?"],
+      ["Check Please", "Okai-kay Onegai Shimass"],
+      ["Where is the bathroom?", "Toh-ee-REH wa doh-KOH des-KAH?"],
+      ["I do not understand", "Wakari-Maisen"],
+      ["Delicious!", "Oishī"],
+    ],
+    numbers: ["1","ichi","2","ni","3","san","4","yon","5","go","6","roku","7","nana","8","Hachi","9","Kyu/ku","10","ju","100","hyaku","1,000","sen"],
+    numbersTip: "💡 How to say 41: Yonjuu (yon-JOO) + Ichi (ee-chee) = Yon-JOO ee-chee",
+    food: [["Water","Mizu"],["Bottled Water","Mizu bin"],["Ice","Koh-REE"],["Beer","Biru"],["Coffee","Koh-HEE"],["Chicken","Tori"],["Beef","Gyoo-nee-KOO"],["Fish","Sakana"],["No shellfish","Ebi, kani nuki"],["Delicious","Oishī"]],
+    locations: [["Restroom","Toh-EH-toe"],["Restaurant","Res-toh-RAN"],["Hotel","Ho-teh-RU"],["Train Station","EH-kee"],["Airport","Koo-KOO"],["Museum","Hah-KOO-tsoo-KAN"],["Market","SHEE-joh"],["Pharmacy","Yah-KYU-kyoh-KU"],["ATM","EH-TEH-EMU"],["Currency Exchange","Ryoh-Gae-YA"],["Taxi Stand","TAH-koo-shee noriba"]],
+    culturalTips: ["Remove shoes when entering homes, temples, and some restaurants.","Slurp noodles loudly — it's polite and shows you're enjoying the meal.","Respect personal space and avoid loud conversations in public.","Convenience stores (konbini) offer authentic, affordable local food.","Bow slightly when greeting and thanking — it shows respect."],
+    currency: "Japanese Yen", rate: "1 USD ≈ 149 JPY", tip: "Numbers >10: number + 10 + number. 27 = ni Ju Nana. NO tipping — it can be considered rude.",
+  },
+  korean: {
+    flag: "🇰🇷", title: "Korean Phrases",
+    teaser: [
+      ["Hello / Goodbye", "On Young Hah Say O / On Young Hee Gah Say O"],
+      ["Thank You (Very Much)", "(Chong Mal) Kam Sahm Knee Da"],
+      ["How much is this?", "Awl Ma eh yo?"],
+    ],
+    full: [
+      ["Yes / No / Maybe", "Neh / Ah Knee Yo / Ama do"],
+      ["Good Morning", "Jo Un Achim E eh Yo"],
+      ["Nice to Meet You", "Man Na Suh Banh Kap Seub Nee Da"],
+      ["The Receipt (please)", "Young Su Jeung Juseyo"],
+      ["Where is the bathroom?", "Hwa Jang Shil O Di Suh Yo?"],
+      ["Do you speak English?", "Young Uh hae Yo?"],
+      ["I don't know", "mollayo"],
+      ["I'm Sorry / Excuse Me", "Me An Hae Yo / Shil leh ham ni da"],
+      ["Good / Bad", "Jo ah yo / An jo ah yo"],
+    ],
+    numbers: ["1","ill","2","E","3","Sam","4","Sah","5","Oh","6","Yook","7","Chil","8","Pal","9","Koo","10","Shib","100","Baek","1,000","Cheon"],
+    numbersTip: "💡 How to say 41: Saship (sah-SHIP) + Il (eel) = Sah-SHIP eel",
+    food: [["Water","Mool"],["Bottled Water","Mul Byung"],["Ice","Uh-reum"],["Beer","Maek Joo"],["Coffee","Coppee"],["Chicken","Dak"],["Beef","Gyu-Gogi"],["Fish","Saeng-sun"],["No shellfish","Saeu-wa gge eopsi"],["Vegetarian","chae-SEEK-joo-eui-jah"]],
+    locations: [["Restroom","Hwa Jang Shil"],["Restaurant","Shik-dang"],["Hotel","Ho-tel"],["Train Station","Kee-Cha-Yoke"],["Airport","Gong-Hang"],["Museum","Bak-Mool-Gwan"],["Market","Shija"],["Pharmacy","Yak-Guk"],["ATM","Hyup-Ryok-Gi"],["Currency Exchange","Hwanryuk"],["Taxi Stand","Tack-shee-Seung-Cha-Jang"]],
+    culturalTips: ["Show respect to elders by using formal speech and bowing slightly.","Dinner is typically 6-7pm. Street food culture is incredible — try everything!","Accept drinks and food with both hands — it's a sign of respect.","Remove shoes when entering homes and some traditional restaurants.","Korean BBQ and street markets are the heart of local culture."],
+    currency: "Korean Won", rate: "10 USD = ~13,000 KRW", tip: "Remove 3 zeros, less 20%. No tipping at restaurants — go to register to pay.",
+  },
+};
+
+let currentDest = null;
+
+// Check if user has already submitted email (persists across page refreshes and language switches)
+function hasSubmittedEmail() {
+  return localStorage.getItem('wanderspeak_email_submitted') === 'true';
+}
+
+// Mark email as submitted (called after Beehiiv form submission)
+function markEmailSubmitted() {
+  localStorage.setItem('wanderspeak_email_submitted', 'true');
+}
+
+// Clear email submission (for testing)
+function clearEmail() {
+  localStorage.removeItem('wanderspeak_email_submitted');
+  // Reset the UI
+  document.getElementById('beehiivForm').style.display = 'block';
+  document.getElementById('successState').classList.remove('visible');
+  document.getElementById('lockedSection').style.display = 'block';
+  // Don't reload - just reset the state
+}
+
+function selectDest(dest) {
+  // Update button states
+  document.querySelectorAll('.dest-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-'+dest).classList.add('active');
+  currentDest = dest;
+  const d = DATA[dest];
+
+  // Update sheet header
+  document.getElementById('sheetFlag').textContent = d.flag;
+  document.getElementById('sheetTitle').textContent = d.title;
+
+  // Build teaser phrases
+  // Check if email already submitted (from localStorage)
+  if (hasSubmittedEmail()) {
+    // Email already submitted — show full sheet for ANY language
+    showFullSheet(dest);
+    document.getElementById('lockedSection').style.display = 'none';
+  } else {
+    // Email NOT submitted — show form (only once)
+    document.getElementById('lockedSection').style.display = 'block';
+    document.getElementById('beehiivForm').style.display = 'flex';
+    document.getElementById('successState').classList.remove('visible');
+    document.getElementById('fullSheet').classList.remove('visible');
+    document.getElementById('fullSheet').style.display = 'none';
+  }
+
+  // Show sheet
+  const sheet = document.getElementById('phraseSheet');
+  sheet.classList.add('visible');
+  sheet.style.display = 'block';
+
+  // Smooth scroll
+  setTimeout(() => sheet.scrollIntoView({behavior:'smooth', block:'start'}), 100);
+}
+
+function unlockSheet() {
+  // Mark email as submitted in localStorage (persists across all languages and sessions)
+  markEmailSubmitted();
+  
+  // Show success
+  document.getElementById('beehiivForm').style.display = 'none';
+  document.getElementById('successState').classList.add('visible');
+
+  setTimeout(() => {
+    document.getElementById('lockedSection').style.display = 'none';
+    showFullSheet(currentDest);
+  }, 1800);
+}
+
+function showFullSheet(dest) {
+  const d = DATA[dest];
+  const fs = document.getElementById('fullSheet');
+
+  let html = '';
+
+  // All phrases
+  html += `<div class="full-section">
+    <div class="full-section-head head-red">Basic Travel Phrases</div>`;
+  [...d.teaser, ...d.full].forEach(([en,ph]) => {
+    html += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
+  });
+  html += `</div>`;
+
+  // Numbers
+  html += `<div class="full-section">
+    <div class="full-section-head head-orange">Numbers</div>
+    <div class="num-grid">`;
+  // Render numbers in pairs - number on top, phonetic below
+  for (let i = 0; i < d.numbers.length; i += 2) {
+    html += `<div style="display:flex;flex-direction:column;gap:6px;">
+      <div class="num-cell" style="background:#f0f0f0;font-weight:600;border:1px solid #ddd;padding:10px;text-align:center;border-radius:4px;">${d.numbers[i]}</div>
+      <div class="num-cell num-val" style="background:white;color:#2ECC9A;font-style:italic;border:1px solid #ddd;padding:8px;text-align:center;font-size:11px;border-radius:4px;">${d.numbers[i+1]}</div>
+    </div>`;
+  }
+  html += `</div>
+    <div style="padding:12px 16px;font-size:12px;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.06);">
+      ${d.numbersTip || '💡 <strong>Combine numbers:</strong> Most languages combine 40 + 1 to make 41. Check your language pattern!'}
+    </div>
+  </div>`;
+
+  // Food + Locations side by side
+  html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">`;
+  html += `<div class="full-section" style="margin-bottom:0"><div class="full-section-head head-blue">Food & Drinks</div>`;
+  d.food.forEach(([en,ph]) => {
+    html += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
+  });
+  html += `</div>`;
+  html += `<div class="full-section" style="margin-bottom:0"><div class="full-section-head head-purple">Locations</div>`;
+  d.locations.forEach(([en,ph]) => {
+    html += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
+  });
+  html += `</div></div>`;
+
+  // Cultural Tips
+  if (d.culturalTips && d.culturalTips.length > 0) {
+    html += `<div class="full-section">
+      <div class="full-section-head head-pink">Travel Like a Local 🌍</div>`;
+    d.culturalTips.forEach((tip) => {
+      html += `<div class="tip-item">• ${tip}</div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Currency
+  html += `<div class="full-section">
+    <div class="full-section-head head-green">Currency — ${d.currency}</div>
+    <div class="currency-box">
+      <div class="currency-rate">${d.rate}</div>
+      <div style="margin-top:4px;font-size:12px;color:rgba(255,255,255,0.6)">${d.tip}</div>
+    </div>
+  </div>`;
+
+  // Save button
+  html += `<button class="save-btn" onclick="saveSheetAsImage()">📱 Save this sheet as image</button>`;
+  html += `<p style="font-size:12px;color:var(--gray);text-align:center;margin-bottom:32px">Create a FAVORITES album and save it there for easy access during your trip</p>`;
+
+  fs.innerHTML = html;
+  fs.classList.add('visible');
+  fs.style.display = 'block';
+}
+
+function saveSheetAsImage() {
+  const language = DATA[currentDest].title;
+  const fullSheet = document.getElementById('fullSheet');
+  
+  if (!fullSheet) {
+    alert('Sheet not found. Please select a language first.');
+    return;
+  }
+  
+  alert('Creating image...');
+  
+  html2canvas(fullSheet, {
+    backgroundColor: '#26215C',
+    scale: 1.5,
+    useCORS: true,
+    allowTaint: true,
+    imageTimeout: 0,
+    logging: false,
+    windowWidth: fullSheet.scrollWidth,
+    windowHeight: fullSheet.scrollHeight,
+  }).then(canvas => {
+    canvas.toBlob(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        // Mobile: Open blob URL directly - better for Safari long-press
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = `WanderSpeak-${language.replace(/\s+/g, '-')}.png`;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        alert('Image opened! Long-press → "Save Image" → Save to Favorites');
+      } else {
+        // Desktop: Direct download
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = `WanderSpeak-${language.replace(/\s+/g, '-')}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        alert('Image saved! Check your downloads.');
+      }
+    }, 'image/png', 0.95);
+  }).catch(err => {
+    console.error('Save error:', err);
+    alert('Save not available. Alternative: Long-press the page → "Save as Image"');
+  });
+}
+</script>
+</body>
+</html>
