@@ -919,19 +919,79 @@ function saveSheetAsImage() {
   
   alert('Creating image...');
   
-  // Create temporary wrapper with header for PNG
+  // Create landscape PNG layout: Basic Phrases LEFT, Food/Locations/Numbers RIGHT
   const tempWrapper = document.createElement('div');
   tempWrapper.style.background = 'white';
   tempWrapper.style.padding = '0';
   
-  // Add header
-  const headerHtml = `<div style="text-align:center;padding:8px 0;border-bottom:1px solid #e0e0e0;margin-bottom:4px;">
+  // Header
+  let pngHtml = `<div style="text-align:center;padding:8px 0;border-bottom:1px solid #e0e0e0;margin-bottom:4px;">
     <div style="font-size:11px;color:#666;margin-bottom:2px;">WanderSpeak</div>
     <div style="font-size:20px;font-weight:700;color:#534AB7;margin-bottom:2px;">${d.flag} ${d.title} Phrases</div>
     <div style="font-size:11px;color:#2ECC9A;font-weight:600;">Phonetic Spelling</div>
   </div>`;
   
-  tempWrapper.innerHTML = headerHtml + fullSheet.innerHTML;
+  // Two-column layout
+  pngHtml += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">`;
+  
+  // LEFT: Basic Travel Phrases
+  pngHtml += `<div class="full-section" style="margin-bottom:0;">
+    <div class="full-section-head head-red">Basic Travel Phrases</div>`;
+  [...d.teaser, ...d.full].forEach(([en,ph]) => {
+    pngHtml += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
+  });
+  pngHtml += `</div>`;
+  
+  // RIGHT COLUMN: Food, Locations, Numbers stacked
+  pngHtml += `<div style="display:flex;flex-direction:column;gap:4px;">`;
+  
+  // Food & Drinks
+  pngHtml += `<div class="full-section" style="margin-bottom:0;">
+    <div class="full-section-head head-blue">Food & Drinks</div>`;
+  d.food.forEach(([en,ph]) => {
+    pngHtml += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
+  });
+  pngHtml += `</div>`;
+  
+  // Locations
+  pngHtml += `<div class="full-section" style="margin-bottom:0;">
+    <div class="full-section-head head-purple">Locations</div>`;
+  d.locations.forEach(([en,ph]) => {
+    pngHtml += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
+  });
+  pngHtml += `</div>`;
+  
+  // Numbers
+  pngHtml += `<div class="full-section" style="margin-bottom:0;">
+    <div class="full-section-head head-orange">Numbers (1-10)</div>
+    <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:0;border:1px solid #e0e0e0;">`;
+  for(let i=0; i<10; i++) {
+    pngHtml += `<div style="text-align:center;padding:4px 2px;border-right:1px solid #e0e0e0;font-weight:600;color:#333;background:white;font-size:12px;">${d.numbers[i*2]}</div>`;
+  }
+  pngHtml += `</div>
+    <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:0;border:1px solid #e0e0e0;border-top:none;">`;
+  for(let i=0; i<10; i++) {
+    pngHtml += `<div style="text-align:center;padding:3px 2px;border-right:1px solid #e0e0e0;color:#2ECC9A;font-style:italic;background:white;font-size:11px;">${d.numbers[i*2+1]}</div>`;
+  }
+  pngHtml += `</div>
+    <div style="padding:8px 12px;font-size:11px;color:#333;background:#D35400;border-top:1px solid #B8470A;font-weight:500;">
+      ${d.numbersTip || 'Combine numbers to make larger numbers. Example: 40 + 1 = 41'}
+    </div>
+  </div>`;
+  
+  // Travel Like a Local
+  if (d.culturalTips && d.culturalTips.length > 0) {
+    pngHtml += `<div class="full-section" style="margin-bottom:0;">
+      <div class="full-section-head head-pink">Travel Like a Local 🌍</div>`;
+    d.culturalTips.forEach((tip) => {
+      pngHtml += `<div class="tip-item" style="padding:6px 12px;font-size:12px;">${tip}</div>`;
+    });
+    pngHtml += `</div>`;
+  }
+  
+  pngHtml += `</div></div>`; // Close right column and grid
+  
+  tempWrapper.innerHTML = pngHtml;
   document.body.appendChild(tempWrapper);
   
   html2canvas(tempWrapper, {
