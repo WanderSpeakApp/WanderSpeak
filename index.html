@@ -182,15 +182,15 @@
 
   .phrase-row {
     display: grid; grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid #e0e0e0;
     transition: background 0.15s;
   }
   .phrase-row:last-child { border-bottom: none; }
-  .phrase-row:hover { background: rgba(255,255,255,0.04); }
+  .phrase-row:hover { background: #f9f9f9; }
   .p-en {
     padding: 16px 16px; font-size: 15px;
-    color: rgba(255,255,255,0.55);
-    border-right: 1px solid rgba(255,255,255,0.06);
+    color: #333;
+    border-right: 1px solid #e0e0e0;
     line-height: 1.4;
   }
   .p-ph {
@@ -304,12 +304,12 @@
   .tag-green { background: rgba(30,132,73,0.2); color: #2ECC71; }
 
   .full-section {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: white;
+    border: 1px solid #e0e0e0;
     border-radius: 16px; overflow: hidden; margin-bottom: 16px;
   }
   .full-section-head {
-    padding: 12px 16px; font-size: 12px; font-weight: 600;
+    padding: 12px 16px; font-size: 13px; font-weight: 600;
     letter-spacing: 0.5px; text-transform: uppercase; color: white;
     text-align: center;
   }
@@ -320,28 +320,27 @@
   .head-green { background: #1E8449; }
   .head-pink { background: #C2185B; }
 
-  .num-grid { display: grid; grid-template-columns: repeat(4,1fr); }
+  .num-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
   .num-cell {
     padding: 10px 6px; text-align: center; font-size: 12px;
-    border-right: 1px solid rgba(255,255,255,0.06);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.5);
+    background: white; color: #333; font-weight: 600;
+    border: 1px solid #e0e0e0; border-radius: 3px;
   }
-  .num-cell:nth-child(4n) { border-right: none; }
-  .num-val { font-weight: 600; color: var(--teal); }
+  .num-cell:nth-child(4n) { border-right: 1px solid #e0e0e0; }
+  .num-val { font-weight: 600; color: var(--teal); background: white; }
   .currency-box {
-    padding: 14px 16px; background: rgba(30,132,73,0.15);
-    border-top: 1px solid rgba(30,132,73,0.3);
-    font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.6;
+    padding: 14px 16px; background: white;
+    border-top: 1px solid #e0e0e0;
+    font-size: 13px; color: #333; line-height: 1.6;
   }
   .currency-rate { font-weight: 700; color: var(--teal); font-size: 15px; }
 
   .tip-item {
     padding: 10px 16px;
     font-size: 13px;
-    color: rgba(255,255,255,0.8);
+    color: #333;
     line-height: 1.5;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid #e0e0e0;
   }
   .tip-item:last-child { border-bottom: none; }
 
@@ -858,23 +857,6 @@ function showFullSheet(dest) {
   });
   html += `</div>`;
 
-  // Numbers
-  html += `<div class="full-section">
-    <div class="full-section-head head-orange">Numbers</div>
-    <div class="num-grid">`;
-  // Render numbers in pairs - number on top, phonetic below
-  for (let i = 0; i < d.numbers.length; i += 2) {
-    html += `<div style="display:flex;flex-direction:column;gap:6px;">
-      <div class="num-cell" style="background:#f0f0f0;font-weight:600;border:1px solid #ddd;padding:10px;text-align:center;border-radius:4px;">${d.numbers[i]}</div>
-      <div class="num-cell num-val" style="background:white;color:#2ECC9A;font-style:italic;border:1px solid #ddd;padding:8px;text-align:center;font-size:11px;border-radius:4px;">${d.numbers[i+1]}</div>
-    </div>`;
-  }
-  html += `</div>
-    <div style="padding:12px 16px;font-size:12px;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.06);">
-      ${d.numbersTip || '💡 <strong>Combine numbers:</strong> Most languages combine 40 + 1 to make 41. Check your language pattern!'}
-    </div>
-  </div>`;
-
   // Food + Locations side by side
   html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">`;
   html += `<div class="full-section" style="margin-bottom:0"><div class="full-section-head head-blue">Food & Drinks</div>`;
@@ -886,6 +868,20 @@ function showFullSheet(dest) {
   d.locations.forEach(([en,ph]) => {
     html += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
   });
+  html += `</div></div>`;
+
+  // Numbers (full width)
+  html += `<div class="full-section">
+    <div class="full-section-head head-orange">Numbers (1-10)</div>
+    <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:2px;">`;
+  for(let i=0; i<10; i++) {
+    html += `<div style="text-align:center;padding:8px;border:1px solid #e0e0e0;font-weight:600;color:#333;background:white;font-size:13px;">${d.numbers[i*2]}</div>`;
+  }
+  html += `</div>
+    <div style="display:grid;grid-template-columns:repeat(10,1fr);gap:2px;">`;
+  for(let i=0; i<10; i++) {
+    html += `<div style="text-align:center;padding:6px;border:1px solid #e0e0e0;color:#2ECC9A;font-style:italic;background:white;font-size:12px;">${d.numbers[i*2+1]}</div>`;
+  }
   html += `</div></div>`;
 
   // Cultural Tips
@@ -903,13 +899,13 @@ function showFullSheet(dest) {
     <div class="full-section-head head-green">Currency — ${d.currency}</div>
     <div class="currency-box">
       <div class="currency-rate">${d.rate}</div>
-      <div style="margin-top:4px;font-size:12px;color:rgba(255,255,255,0.6)">${d.tip}</div>
+      <div style="margin-top:4px;font-size:12px;color:#333">${d.tip}</div>
     </div>
   </div>`;
 
   // Save button
   html += `<button class="save-btn" onclick="saveSheetAsImage()">📱 Save this sheet as image</button>`;
-  html += `<p style="font-size:12px;color:var(--gray);text-align:center;margin-bottom:32px">Create a FAVORITES album and save it there for easy access during your trip</p>`;
+  html += `<p style="font-size:12px;color:rgba(255,255,255,0.7);text-align:center;margin-bottom:32px">Create a FAVORITES album and save it there for easy access during your trip</p>`;
 
   fs.innerHTML = html;
   fs.classList.add('visible');
@@ -928,13 +924,13 @@ function saveSheetAsImage() {
   alert('Creating image...');
   
   html2canvas(fullSheet, {
-    backgroundColor: '#26215C',
+    backgroundColor: 'white',
     scale: 1.5,
     useCORS: true,
     allowTaint: true,
     imageTimeout: 0,
     logging: false,
-    windowWidth: fullSheet.scrollWidth,
+    windowWidth: 1200,
     windowHeight: fullSheet.scrollHeight,
   }).then(canvas => {
     canvas.toBlob(blob => {
