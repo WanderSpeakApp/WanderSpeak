@@ -860,9 +860,13 @@ function showFullSheet(dest) {
   html += `<div class="full-section">
     <div class="full-section-head head-orange">Numbers</div>
     <div class="num-grid">`;
-  d.numbers.forEach((n,i) => {
-    html += `<div class="num-cell ${i%2===1?'num-val':''}">${n}</div>`;
-  });
+  // Render numbers in pairs - number on top, phonetic below
+  for (let i = 0; i < d.numbers.length; i += 2) {
+    html += `<div style="display:flex;flex-direction:column;gap:6px;">
+      <div class="num-cell" style="background:#f0f0f0;font-weight:600;border:1px solid #ddd;padding:10px;text-align:center;border-radius:4px;">${d.numbers[i]}</div>
+      <div class="num-cell num-val" style="background:white;color:#2ECC9A;font-style:italic;border:1px solid #ddd;padding:8px;text-align:center;font-size:11px;border-radius:4px;">${d.numbers[i+1]}</div>
+    </div>`;
+  }
   html += `</div>
     <div style="padding:12px 16px;font-size:12px;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.06);">
       ${d.numbersTip || '💡 <strong>Combine numbers:</strong> Most languages combine 40 + 1 to make 41. Check your language pattern!'}
@@ -902,7 +906,7 @@ function showFullSheet(dest) {
   </div>`;
 
   // Save button
-  html += `<button class="save-btn" onclick="saveSheetAsVerticalImage()">📱 Save this sheet as image</button>`;
+  html += `<button class="save-btn" onclick="saveSheetAsImage()">📱 Save this sheet as image</button>`;
   html += `<p style="font-size:12px;color:var(--gray);text-align:center;margin-bottom:32px">Create a FAVORITES album and save it there for easy access during your trip</p>`;
 
   fs.innerHTML = html;
@@ -912,91 +916,31 @@ function showFullSheet(dest) {
 
 function saveSheetAsImage() {
   const language = DATA[currentDest].title;
-  const d = DATA[currentDest];
+  const fullSheet = document.getElementById('fullSheet');
+  
+  if (!fullSheet) {
+    alert('Sheet not found. Please select a language first.');
+    return;
+  }
   
   alert('Creating image...');
   
-  // Create a temporary container with the vertical layout
-  const tempContainer = document.createElement('div');
-  tempContainer.style.position = 'fixed';
-  tempContainer.style.left = '-9999px';
-  tempContainer.style.top = '-9999px';
-  tempContainer.style.width = '500px';
-  tempContainer.style.backgroundColor = 'white';
-  tempContainer.style.fontFamily = 'Poppins, sans-serif';
-  
-  // Build vertical layout HTML
-  let html = `
-    <div style="background: #2ECC9A; color: white; padding: 16px; text-align: center; font-size: 12px; font-weight: 600;">
-      <div style="margin-bottom: 6px;">💾 Save this page to your phone</div>
-      <div>No WiFi or data needed • Zoom in to read what you need as you travel</div>
-    </div>
-    
-    <div style="background: linear-gradient(135deg, #534AB7 0%, #2ECC9A 100%); color: white; padding: 30px 20px; text-align: center;">
-      <div style="font-size: 13px; font-weight: 600; margin-bottom: 12px;">WanderSpeak</div>
-      <div style="font-size: 40px; margin-bottom: 12px;">${d.flag}</div>
-      <div style="font-size: 28px; font-weight: 700; margin-bottom: 6px;">${d.title} Phrases</div>
-      <div style="font-size: 13px; color: rgba(255,255,255,0.9);">Phonetic Spelling — Read it like English</div>
-    </div>
-    
-    <div style="padding: 20px;">
-      <div style="background: #534AB7; color: white; padding: 11px 14px; font-weight: 600; font-size: 12px; text-align: center; margin: 16px 0 12px 0; border-radius: 3px;">Phrases</div>
-  `;
-  
-  // Add phrases
-  d.full.forEach(([en, ph]) => {
-    html += `<div style="display: grid; grid-template-columns: 1fr 1fr; padding: 8px; border-bottom: 1px solid #eee; font-size: 11px;"><div style="font-weight: 500; color: #333;">${en}</div><div style="color: #2ECC9A; font-style: italic; font-size: 10px;">${ph}</div></div>`;
-  });
-  
-  // Add locations
-  html += `<div style="background: #534AB7; color: white; padding: 11px 14px; font-weight: 600; font-size: 12px; text-align: center; margin: 16px 0 12px 0; border-radius: 3px;">Locations</div>`;
-  d.locations.forEach(([en, ph]) => {
-    html += `<div style="display: grid; grid-template-columns: 1fr 1fr; padding: 8px; border-bottom: 1px solid #eee; font-size: 11px;"><div style="font-weight: 500; color: #333;">${en}</div><div style="color: #2ECC9A; font-style: italic; font-size: 10px;">${ph}</div></div>`;
-  });
-  
-  // Add food
-  html += `<div style="background: #2ECC9A; color: white; padding: 11px 14px; font-weight: 600; font-size: 12px; text-align: center; margin: 16px 0 12px 0; border-radius: 3px;">Food & Drinks</div>`;
-  d.food.forEach(([en, ph]) => {
-    html += `<div style="display: grid; grid-template-columns: 1fr 1fr; padding: 8px; border-bottom: 1px solid #eee; font-size: 11px;"><div style="font-weight: 500; color: #333;">${en}</div><div style="color: #2ECC9A; font-style: italic; font-size: 10px;">${ph}</div></div>`;
-  });
-  
-  // Add numbers
-  html += `<div style="background: #534AB7; color: white; padding: 11px 14px; font-weight: 600; font-size: 12px; text-align: center; margin: 16px 0 12px 0; border-radius: 3px;">Numbers (1-10)</div>`;
-  html += `<div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; padding: 0 8px; margin-bottom: 12px;">`;
-  for (let i = 0; i < 10; i++) {
-    html += `<div style="background: #f0f0f0; padding: 8px 4px; text-align: center; font-size: 11px; font-weight: 600; border: 1px solid #ddd; border-radius: 3px;">${d.numbers[i]}</div>`;
-  }
-  html += `</div><div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; padding: 0 8px; margin-bottom: 12px;">`;
-  for (let i = 11; i < 21; i++) {
-    html += `<div style="background: white; padding: 6px 4px; text-align: center; font-size: 9px; font-style: italic; color: #2ECC9A; border: 1px solid #ddd; border-radius: 3px;">${d.numbers[i]}</div>`;
-  }
-  html += `</div>`;
-  html += `<div style="font-size: 10px; color: #666; padding: 10px; background: #f9f9f9; border-left: 3px solid #2ECC9A; margin: 12px 8px;">${d.numbersTip || '💡 Combine numbers for larger amounts'}</div>`;
-  
-  // Add guide  
-  html += `<div style="background: #f0f8f5; border-top: 3px solid #2ECC9A; border-bottom: 3px solid #2ECC9A; padding: 16px; margin: 20px 0;"><div style="color: #534AB7; font-weight: 600; font-size: 12px; margin-bottom: 10px;">📚 How to Use This Guide</div>`;
-  html += `<div style="font-size: 10px; line-height: 1.6; color: #333;">This is your phonetic spelling guide. Use the phonetics as written to sound natural in ${d.title}.</div><div style="text-align: center; margin-top: 14px; color: #2ECC9A; font-weight: 600; font-size: 11px;">Sound like a local. Travel like one too. ✈️</div></div>`;
-  
-  html += `<div style="background: #f5f5f5; text-align: center; padding: 12px; font-size: 11px; color: #2ECC9A; font-weight: 600; border-top: 1px solid #eee;">getwanderspeak.com</div>`;
-  html += `</div>`;
-  
-  tempContainer.innerHTML = html;
-  document.body.appendChild(tempContainer);
-  
-  // Capture and download
-  html2canvas(tempContainer, {
-    backgroundColor: 'white',
-    scale: 2,
+  html2canvas(fullSheet, {
+    backgroundColor: '#26215C',
+    scale: 1.5,
     useCORS: true,
     allowTaint: true,
     imageTimeout: 0,
     logging: false,
+    windowWidth: fullSheet.scrollWidth,
+    windowHeight: fullSheet.scrollHeight,
   }).then(canvas => {
     canvas.toBlob(blob => {
       const blobUrl = URL.createObjectURL(blob);
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       
       if (isMobile) {
+        // Mobile: Open blob URL directly - better for Safari long-press
         const link = document.createElement('a');
         link.href = blobUrl;
         link.download = `WanderSpeak-${language.replace(/\s+/g, '-')}.png`;
@@ -1004,22 +948,20 @@ function saveSheetAsImage() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        document.body.removeChild(tempContainer);
         alert('Image opened! Long-press → "Save Image" → Save to Favorites');
       } else {
+        // Desktop: Direct download
         const link = document.createElement('a');
         link.href = blobUrl;
         link.download = `WanderSpeak-${language.replace(/\s+/g, '-')}.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        document.body.removeChild(tempContainer);
         alert('Image saved! Check your downloads.');
       }
     }, 'image/png', 0.95);
   }).catch(err => {
     console.error('Save error:', err);
-    document.body.removeChild(tempContainer);
     alert('Save not available. Alternative: Long-press the page → "Save as Image"');
   });
 }
