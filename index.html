@@ -863,18 +863,31 @@ function showFullSheet(dest) {
   });
   html += `</div>`;
 
-  // Food + Locations side by side - TIGHTER
-  html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:4px;">`;
-  html += `<div class="full-section" style="margin-bottom:0"><div class="full-section-head head-blue">Food & Drinks</div>`;
+  // Shopping
+  html += `<div class="full-section" style="margin-bottom:4px;">
+    <div class="full-section-head" style="background:#8B4789;">Shopping</div>`;
+  if (d.shopping) {
+    d.shopping.forEach(([en,ph]) => {
+      html += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
+    });
+  }
+  html += `</div>`;
+
+  // Food & Drinks
+  html += `<div class="full-section" style="margin-bottom:4px;">
+    <div class="full-section-head head-blue">Food & Drinks</div>`;
   d.food.forEach(([en,ph]) => {
     html += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
   });
   html += `</div>`;
-  html += `<div class="full-section" style="margin-bottom:0"><div class="full-section-head head-purple">Locations</div>`;
+
+  // Locations
+  html += `<div class="full-section" style="margin-bottom:4px;">
+    <div class="full-section-head head-purple">Locations</div>`;
   d.locations.forEach(([en,ph]) => {
     html += `<div class="phrase-row"><div class="p-en">${en}</div><div class="p-ph">${ph}</div></div>`;
   });
-  html += `</div></div>`;
+  html += `</div>`;
 
   // Numbers (full width, 10 columns) - COMPACT
   html += `<div class="full-section" style="margin-bottom:4px;">
@@ -894,7 +907,20 @@ function showFullSheet(dest) {
     </div>
   </div>`;
 
-  // Cultural Tips - COMPACT
+  // Currency
+  html += `<div class="full-section" style="margin-bottom:4px;">
+    <div class="full-section-head head-green">Currency</div>
+    <div style="padding:8px 12px;background:white;border:1px solid #e0e0e0;border-top:none;">
+      <div style="font-weight:600;color:#333;margin-bottom:4px;">${d.currency}</div>
+      <div style="font-size:11px;color:#333;margin-bottom:4px;">${d.rate}</div>
+      <div style="font-size:11px;color:#333;">${d.tip}</div>
+    </div>
+    <div style="padding:8px 12px;font-size:11px;color:#333;background:#1E8449;border-top:1px solid #0B4423;font-weight:500;">
+      💡 Quick conversion: Divide local price by ${d.rate.split('≈')[1]?.trim().split(' ')[0] || 'exchange rate'} to get USD
+    </div>
+  </div>`;
+
+  // Cultural Tips
   if (d.culturalTips && d.culturalTips.length > 0) {
     html += `<div class="full-section" style="margin-bottom:4px;">
       <div class="full-section-head head-pink">Travel Like a Local 🌍</div>`;
@@ -940,7 +966,7 @@ function saveSheetAsImage() {
   // Two-column layout
   pngHtml += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">`;
   
-  // LEFT COLUMN: Basic Travel Phrases, Shopping, Travel Like a Local, Currency
+  // LEFT COLUMN: Basic Travel Phrases, Shopping, Travel Like a Local
   pngHtml += `<div style="display:flex;flex-direction:column;gap:4px;">`;
   
   // Basic Travel Phrases
@@ -971,19 +997,9 @@ function saveSheetAsImage() {
     pngHtml += `</div>`;
   }
   
-  // Currency
-  pngHtml += `<div class="full-section" style="margin-bottom:0;">
-    <div class="full-section-head head-green">Currency</div>
-    <div style="padding:8px 12px;background:white;border:1px solid #e0e0e0;border-top:none;">
-      <div style="font-weight:600;color:#333;margin-bottom:4px;">${d.currency}</div>
-      <div style="font-size:11px;color:#333;margin-bottom:4px;">${d.rate}</div>
-      <div style="font-size:11px;color:#333;">${d.tip}</div>
-    </div>
-  </div>`;
-  
   pngHtml += `</div>`; // Close left column
   
-  // RIGHT COLUMN: Food & Drinks, Locations, Numbers
+  // RIGHT COLUMN: Food & Drinks, Locations, Numbers, Currency
   pngHtml += `<div style="display:flex;flex-direction:column;gap:4px;">`;
   
   // Food & Drinks
@@ -1017,6 +1033,19 @@ function saveSheetAsImage() {
   pngHtml += `</div>
     <div style="padding:8px 12px;font-size:11px;color:#333;background:#D35400;border-top:1px solid #B8470A;font-weight:500;">
       ${d.numbersTip || 'Combine numbers to make larger numbers. Example: 40 + 1 = 41'}
+    </div>
+  </div>`;
+  
+  // Currency
+  pngHtml += `<div class="full-section" style="margin-bottom:0;">
+    <div class="full-section-head head-green">Currency</div>
+    <div style="padding:8px 12px;background:white;border:1px solid #e0e0e0;border-top:none;">
+      <div style="font-weight:600;color:#333;margin-bottom:4px;">${d.currency}</div>
+      <div style="font-size:11px;color:#333;margin-bottom:4px;">${d.rate}</div>
+      <div style="font-size:11px;color:#333;">${d.tip}</div>
+    </div>
+    <div style="padding:8px 12px;font-size:11px;color:#333;background:#1E8449;border-top:1px solid #0B4423;font-weight:500;">
+      Divide local price by ${d.rate.split('≈')[1]?.trim().split(' ')[0] || 'exchange rate'} to get USD
     </div>
   </div>`;
   
