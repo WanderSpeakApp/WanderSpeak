@@ -809,6 +809,12 @@ function clearEmail() {
 }
 
 function selectDest(dest) {
+  // Track destination selection
+  gtag('event', 'destination_selected', {
+    destination: dest,
+    destination_name: DATA[dest].title
+  });
+  
   // Update button states
   document.querySelectorAll('.dest-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('btn-'+dest).classList.add('active');
