@@ -462,9 +462,9 @@
 <!-- HERO -->
 <div class="container">
   <section class="hero">
-    <div class="hero-eyebrow">✈️ Free Phonetic Phrase Sheets</div>
-    <h1>Sound like a<br><em>local.</em></h1>
-    <p class="hero-sub">Phonetic phrases for English speaking travelers. Every word spelled out so you can actually say it — no studying, no app, no wifi needed.</p>
+    <div class="hero-eyebrow">✈️ Free Travel Cards</div>
+    <h1>Travel with confidence.<br><em>Connect with intention.</em></h1>
+    <p class="hero-sub">Before you land, download everything you need on one offline Travel Card. Phonetic phrases you can actually say. Cultural tips so you show respect. Food, transportation, currency, etiquette—prepared for everything. Save it to your phone. Use it anywhere.</p>
     <p class="hero-tagline">Pick your destination below 👇</p>
   </section>
 
@@ -484,7 +484,7 @@
       <div class="how-step">
         <div class="step-num">2</div>
         <div>
-          <div class="step-title">Get your free phrase sheet</div>
+          <div class="step-title">Get your free Travel Card</div>
           <div class="step-desc">Read as you would in English. Every word spelled out phonetically.</div>
         </div>
       </div>
@@ -548,15 +548,15 @@
       <span class="sheet-flag" id="sheetFlag"></span>
       <div>
         <div class="sheet-title" id="sheetTitle"></div>
-        <div class="sheet-sub">Phonetic Spelling — Read it like English</div>
+        <div class="sheet-sub">Everything you need on one Travel Card</div>
       </div>
     </div>
 
     <!-- Locked section -->
     <div class="locked-section" id="lockedSection">
       <div class="lock-icon">🔒</div>
-      <div class="locked-title">Get the full phrase sheet</div>
-      <div class="locked-sub">30+ phrases, numbers, food, locations, dietary needs & currency tips — all phonetically spelled. Free.</div>
+      <div class="locked-title">Get Your Travel Card</div>
+      <div class="locked-sub">Essential phrases • Shopping & dining • Local transportation • Currency conversion • Dietary needs • Cultural etiquette • Numbers & practical guidance — all phonetically spelled, works offline, free. One email.</div>
 
       <div id="beehiivForm">
         <div data-beehiiv-form="2382bb42-f5d6-48db-97fd-98bdd16e93a3"></div>
@@ -566,7 +566,7 @@
       <div class="success-state" id="successState">
         <div class="success-icon">🎉</div>
         <div class="success-title">You're in!</div>
-        <div class="success-sub">Your full phrase sheet is loading below. Save it to your phone before your trip.</div>
+        <div class="success-sub">Your Travel Card is ready! Save it to your phone—it works offline everywhere you go.</div>
       </div>
     </div>
 
@@ -931,8 +931,8 @@ function showFullSheet(dest) {
   }
 
   // Save button
-  html += `<button class="save-btn" onclick="saveSheetAsImage()" style="margin-top:8px;">📱 Save this sheet as image</button>`;
-  html += `<p style="font-size:11px;color:rgba(255,255,255,0.7);text-align:center;margin:8px 0 16px 0;">Create a FAVORITES album and save it there for easy access during your trip</p>`;
+  html += `<button class="save-btn" onclick="saveSheetAsImage()" style="margin-top:8px;">📱 Save Your Travel Card</button>`;
+  html += `<p style="font-size:11px;color:rgba(255,255,255,0.7);text-align:center;margin:8px 0 16px 0;">Your Travel Card works offline. Save it to your FAVORITES album for easy access during your trip.</p>`;
 
   fs.innerHTML = html;
   fs.classList.add('visible');
@@ -945,11 +945,11 @@ function saveSheetAsImage() {
   const fullSheet = document.getElementById('fullSheet');
   
   if (!fullSheet) {
-    alert('Sheet not found. Please select a language first.');
+    alert('Travel Card not found. Please select a language first.');
     return;
   }
   
-  alert('Creating image...');
+  alert('Creating your Travel Card...');
   
   // Create landscape PNG layout: Basic Phrases LEFT, Food/Locations/Numbers RIGHT
   const tempWrapper = document.createElement('div');
@@ -960,7 +960,7 @@ function saveSheetAsImage() {
   let pngHtml = `<div style="text-align:center;padding:8px 0;border-bottom:1px solid #e0e0e0;margin-bottom:4px;">
     <div style="font-size:11px;color:#666;margin-bottom:2px;">WanderSpeak</div>
     <div style="font-size:20px;font-weight:700;color:#534AB7;margin-bottom:2px;">${d.flag} ${d.title} Phrases</div>
-    <div style="font-size:11px;color:#2ECC9A;font-weight:600;">Phonetic Spelling</div>
+    <div style="font-size:11px;color:#2ECC9A;font-weight:600;">Your Travel Card</div>
   </div>`;
   
   // Two-column layout
@@ -1051,6 +1051,11 @@ function saveSheetAsImage() {
   
   pngHtml += `</div></div>`; // Close right column and grid
   
+  // Footer
+  pngHtml += `<div style="text-align:center;padding:8px 0;border-top:1px solid #e0e0e0;margin-top:4px;font-size:10px;color:#999;">
+    Powered by WanderSpeak
+  </div>`;
+  
   tempWrapper.innerHTML = pngHtml;
   document.body.appendChild(tempWrapper);
   
@@ -1080,7 +1085,7 @@ function saveSheetAsImage() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        alert('Image opened! Long-press → "Save Image" → Save to Favorites');
+        alert('Travel Card opened! Long-press → "Save Image" → Add to Favorites');
       } else {
         // Desktop: Direct download
         const link = document.createElement('a');
@@ -1089,12 +1094,12 @@ function saveSheetAsImage() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        alert('Image saved! Check your downloads.');
+        alert('Travel Card saved! Check your downloads.');
       }
     }, 'image/png', 0.95);
   }).catch(err => {
     console.error('Save error:', err);
-    alert('Save not available. Alternative: Long-press the page → "Save as Image"');
+    alert('Travel Card not available. Alternative: Long-press the page → "Save as Image"');
   });
 }
 </script>
