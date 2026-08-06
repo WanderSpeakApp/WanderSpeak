@@ -778,11 +778,11 @@ const DATA = {
     ],
     numbers: ["1","ill","2","E","3","Sam","4","Sah","5","Oh","6","Yook","7","Chil","8","Pal","9","Koo","10","Shib","100","Baek","1,000","Cheon"],
     numbersTip: "💡 How to say 41: Saship (sah-SHIP) + Il (eel) = Sah-SHIP eel",
-    shopping: [["Do you have this in [size]?","Ee-geot-i [size] Chae-eso Isseo yo?"],["What size is this?","Ee-geot-i Eot-teon Saizu-yo?"],["Too small / Too big","Neomu Jag-eun / Neomu Keun"],["Can I try it on?","Ipeo-bwa-do Dwae-yo?"],["Do you have another color?","Dareun Saekkkal Isseo-yo?"],["What's the price?","Eol Ma-ni Dwae-yo?"]],
-    food: [["Water","Mool"],["Bottled Water","Mul Byung"],["Ice","Uh-reum"],["Beer","Maek Joo"],["Coffee","Coppee"],["No milk","Uu-yu eops-i"],["Soy milk","Doo-yu"],["Almond milk","Ah-mond uu-yu"],["Oat milk","Gwi-ri uu-yu"],["Chicken","Dak"],["Beef","Gyu-Gogi"],["Fish","Saeng-sun"],["No shellfish","Saeu-wa gge eopsi"],["Vegetarian","chae-SEEK-joo-eui-jah"]],
-    locations: [["Restroom","Hwa Jang Shil"],["Restaurant","Shik-dang"],["Hotel","Ho-tel"],["Train Station","Kee-Cha-Yoke"],["Airport","Gong-Hang"],["Museum","Bak-Mool-Gwan"],["Market","Shija"],["Pharmacy","Yak-Guk"],["ATM","Hyup-Ryok-Gi"],["Currency Exchange","Hwanryuk"],["Taxi Stand","Tack-shee-Seung-Cha-Jang"]],
-    culturalTips: ["Show respect to elders by using formal speech and bowing slightly.","Dinner is typically 6-7pm. Street food culture is incredible — try everything!","Don't ask for the check — when done eating, you get up and go to the cash register to pay.","Uber is banned — use Naver, Kakao Taxi, or local apps. Red taxis are standard, green are deluxe.","Korean BBQ and street markets are the heart of local culture."],
-    currency: "Korean Won", rate: "10 USD = ~13,000 KRW", tip: "Remove 3 zeros, less 20%. No tipping at restaurants — go to register to pay.",
+    shopping: [["Do you have this in [size]?","Ee-geot-i [size] Chae-eso Isseo yo?"],["What size is this?","Ee-geot-i Eot-teon Saizu-yo?"],["Too small / Too big","Neomu Jag-eun / Neomu Keun"],["Can I try it on?","Ipeo-bwa-do Dwae-yo?"],["Do you have another color?","Dareun Saekkkal Isseo-yo?"],["What's the price?","Eol Ma-ni Dwae-yo?"],["Do you accept card?","Kah-deu doe-nah yo?"]],
+    food: [["Water","Mool"],["Bottled Water","Mul Byung"],["Ice","Uh-reum"],["Beer","Maek Joo"],["Coffee","Coppee"],["No milk","Uu-yu eops-i"],["Soy milk","Doo-yu"],["Almond milk","Ah-mond uu-yu"],["Oat milk","Gwi-ri uu-yu"],["Spicy / Not Spicy","Mae-un / An mae-un"],["Rice","Bap"],["Chicken","Dak"],["Beef","Gyu-Gogi"],["Fish","Saeng-sun"],["No shellfish","Saeu-wa gge eopsi"],["Vegetarian","chae-SEEK-joo-eui-jah"]],
+    locations: [["Restroom","Hwa Jang Shil"],["Restaurant","Shik-dang"],["Hotel","Ho-tel"],["Train Station","Kee-Cha-Yoke"],["Subway Station","Jihachuk"],["Airport","Gong-Hang"],["Museum","Bak-Mool-Gwan"],["Market","Shija"],["Convenience Store","Con-bi-nee-uns"],["Pharmacy","Yak-Guk"],["Police","Gyung-Chal"],["Hospital","Byung-Won"],["ATM","Hyup-Ryok-Gi"],["Currency Exchange","Hwanryuk"],["Taxi Stand","Tack-shee-Seung-Cha-Jang"]],
+    culturalTips: ["Maps: Use Naver Map for navigation. It supports English and is perfect for finding local destinations.","Payment: At restaurants, go to the register to pay—don't ask for the check at your table.","Taxis: Use Kakao T app. Uber/UT also available. Red '빈차' sign = vacant. Green '예약' = reserved.","Transit: Get a T-money card for buses and subways—available at convenience stores and stations.","Taxi Tip: Many drivers don't speak English. Have your destination address in Korean ready on your phone."],
+    currency: "Korean Won", rate: "10 USD = ~13,000 KRW", tip: "Credit cards widely accepted, even for small purchases. Remove 3 zeros from KRW, less 20% = approx USD. No tipping customary.",
   },
 };
 
@@ -807,6 +807,21 @@ function clearEmail() {
   document.getElementById('lockedSection').style.display = 'block';
   // Don't reload - just reset the state
 }
+
+// Track homepage view on page load
+document.addEventListener('DOMContentLoaded', function() {
+  gtag('event', 'page_view', {
+    page_title: 'WanderSpeak Homepage',
+    page_path: '/'
+  });
+  
+  // Track Typeform submission if embedded
+  if (window.tf) {
+    window.tf.events.onSubmit(() => {
+      gtag('event', 'feedback_submitted');
+    });
+  }
+});
 
 function selectDest(dest) {
   // Track destination selection
@@ -850,6 +865,12 @@ function selectDest(dest) {
 }
 
 function unlockSheet() {
+  // Track email submission
+  gtag('event', 'email_submitted', {
+    destination: currentDest,
+    destination_name: DATA[currentDest].title
+  });
+  
   // Mark email as submitted in localStorage (persists across all languages and sessions)
   markEmailSubmitted();
   
@@ -860,6 +881,12 @@ function unlockSheet() {
   setTimeout(() => {
     document.getElementById('lockedSection').style.display = 'none';
     showFullSheet(currentDest);
+    
+    // Track Travel Card unlocked
+    gtag('event', 'travel_card_unlocked', {
+      destination: currentDest,
+      destination_name: DATA[currentDest].title
+    });
   }, 1800);
 }
 
@@ -1099,6 +1126,14 @@ function saveSheetAsImage() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        
+        // Track Travel Card saved
+        gtag('event', 'travel_card_saved', {
+          destination: currentDest,
+          destination_name: language,
+          device: 'mobile'
+        });
+        
         alert('Travel Card opened! Long-press → "Save Image" → Add to Favorites');
       } else {
         // Desktop: Direct download
@@ -1108,6 +1143,14 @@ function saveSheetAsImage() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        
+        // Track Travel Card saved
+        gtag('event', 'travel_card_saved', {
+          destination: currentDest,
+          destination_name: language,
+          device: 'desktop'
+        });
+        
         alert('Travel Card saved! Check your downloads.');
       }
     }, 'image/png', 0.95);
