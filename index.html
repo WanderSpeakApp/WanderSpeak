@@ -680,7 +680,7 @@ const DATA = {
     currency: "Brazilian Real", rate: "1 USD = ~5 Reais", tip: "Shorthand: Remove 0, ×2, minus 10%. $18.50 USD = R$100",
   },
   french: {
-    flag: "🇫🇷", title: "French Phrases",
+    flag: "🇫🇷", title: "France", language: "French",
     teaser: [
       ["Hello (Good Morning) / Goodbye", "Bonjour / Ohr Vwah"],
       ["Thank You (Very Much) / You're Welcome", "Merci (beau coo) / De rien"],
@@ -695,14 +695,14 @@ const DATA = {
       ["Where is the bathroom?", "Oo sont lay twah-LET?"],
       ["The check please", "Lah ah-dee-see-YON, see voo PLEH?"],
       ["Can I pay by Credit Card?", "Pwee pah-yay par kart duh kreh-DEE?"],
-      ["Beautiful / Delicious", "Belle / Deh-lee-syuh"],
+      ["I would like...", "Juh voo-DRAY..."],
     ],
     numbers: ["1","oon","2","Duh","3","Twah","4","Caht","5","Senk","6","Sis","7","Set","8","WEET","9","Nuf","10","Dis","100","Son","1,000","Mil"],
     numbersTip: "💡 How to say 41: Quarante (Ka-RAHNT) + Un (OON) = Ka-RAHNT eh OON",
     shopping: [["Do you have this in [size]?","Ah-vay-voo SAH en TAH-yuh [size]?"],["What size is this?","Keluh TAH-yuh?"],["Too small / Too big","Troh puh-TEE / Troh GRAHN"],["Can I try it on?","Pwee-juh l'eh-say-yay?"],["Do you have another color?","Ah-vay-voo OON OR-truh KOO-lehr?"],["What's the price?","Kuh SAH coo-tuh?"]],
     food: [["Water","Loo"],["Bottled Water","Loo Em-boo-TAY"],["Ice","Glah-SOHN"],["Sparkling Water","Oh peh-tee-LAHNT"],["Coffee","Cafe"],["No milk","Pah duh leh"],["Soy milk","Leh duh So-HAH"],["Almond milk","Leh duh Ah-MAHND"],["Oat milk","Leh duh Ah-WAH-nuh"],["Chicken","Poo-LAY"],["Beef","BIF"],["Fish","Pwah-SOHN"],["No shellfish","Pah duh KROO-stah-say"]],
     locations: [["Restroom","Twah-LET"],["Restaurant","Res-toh-RAN"],["Hotel","O-TEL"],["Train Station","Gare"],["Airport","Ah-roh-PORT"],["Museum","Moo-ZAY"],["Market","Mar-SHAY"],["Pharmacy","Far-mah-SEE"],["ATM","Dis-pen-SAH-triss"],["Currency Exchange","Boo-ROH duh SHANJ"],["Taxi Stand","Stah-SYOHN deh tack-SEE"]],
-    culturalTips: ["Always greet with 'Bonjour' before asking anything — it's considered rude to skip this.","Dinner is 7-8pm. Use Uber or local taxi apps — they're reliable and straightforward.","Dress nicely when dining out — appearance matters in France.","Use formal speech (vous) with strangers unless invited to use informal (tu).","Take pride in the experience — food and wine are part of French culture."],
+    culturalTips: ["👋 GREET FIRST: Say \"Bonjour\" before asking a question, ordering, or entering a small shop. It matters.","📱 METRO: iPhone? Add Navigo to Apple Wallet, purchase transit tickets or pass on your phone, then tap at the gate.","🍽️ DINING: Dinner is later than in the U.S.; many restaurants begin dinner around 7–7:30 PM. Ask for the check when you're ready.","🚕 RIDESHARE: Uber works well in Paris. Around airports, train stations, and busy areas, check the app carefully for your designated pickup point.","🗣️ POLITENESS: Use \"vous\" with strangers. Bonjour + s'il vous plaît + merci goes a long way."],
     currency: "Euro", rate: "1 USD ≈ 0.92 EUR", tip: "Tip: Not mandatory in France. Round up or leave small change.",
   },
   italian: {
@@ -838,7 +838,7 @@ function selectDest(dest) {
 
   // Update sheet header
   document.getElementById('sheetFlag').textContent = d.flag;
-  document.getElementById('sheetTitle').textContent = dest === 'japanese' ? 'Japan Travel Card' : d.title;
+  document.getElementById('sheetTitle').textContent = (dest === 'japanese' || dest === 'french') ? `${d.title} Travel Card` : d.title;
   document.getElementById('sheetSub').textContent = d.language || 'Everything you need on one Travel Card';
 
   // Build teaser phrases
@@ -967,6 +967,7 @@ function showFullSheet(dest) {
     let tipHeader = 'Travel Like a Local 🌍';
     if (dest === 'korean') tipHeader = 'BEFORE YOU LAND 🇰🇷';
     if (dest === 'japanese') tipHeader = 'BEFORE YOU LAND 🇯🇵';
+    if (dest === 'french') tipHeader = 'BEFORE YOU LAND 🇫🇷';
     html += `<div class="full-section" style="margin-bottom:4px;">
       <div class="full-section-head head-pink">${tipHeader}</div>`;
     d.culturalTips.forEach((tip) => {
@@ -1005,7 +1006,7 @@ function saveSheetAsImage() {
   let pngHtml = `<div style="text-align:center;padding:8px 0;border-bottom:1px solid #e0e0e0;margin-bottom:4px;">
     <div style="font-size:11px;color:#666;margin-bottom:2px;">WanderSpeak</div>`;
   
-  if (currentDest === 'japanese') {
+  if (currentDest === 'japanese' || currentDest === 'french') {
     pngHtml += `<div style="font-size:20px;font-weight:700;color:#534AB7;margin-bottom:2px;">${d.flag} ${d.title} Travel Card</div>
     <div style="font-size:11px;color:#2ECC9A;font-weight:600;">${d.language}</div>`;
   } else {
@@ -1044,6 +1045,7 @@ function saveSheetAsImage() {
     let tipHeader = 'Travel Like a Local 🌍';
     if (currentDest === 'korean') tipHeader = 'BEFORE YOU LAND 🇰🇷';
     if (currentDest === 'japanese') tipHeader = 'BEFORE YOU LAND 🇯🇵';
+    if (currentDest === 'french') tipHeader = 'BEFORE YOU LAND 🇫🇷';
     pngHtml += `<div class="full-section" style="margin-bottom:0;">
       <div class="full-section-head head-pink">${tipHeader}</div>`;
     d.culturalTips.forEach((tip) => {
