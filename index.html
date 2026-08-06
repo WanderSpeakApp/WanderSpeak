@@ -556,7 +556,7 @@
       <span class="sheet-flag" id="sheetFlag"></span>
       <div>
         <div class="sheet-title" id="sheetTitle"></div>
-        <div class="sheet-sub">Everything you need on one Travel Card</div>
+        <div class="sheet-sub" id="sheetSub">Everything you need on one Travel Card</div>
       </div>
     </div>
 
@@ -732,7 +732,7 @@ const DATA = {
     currency: "Euro", rate: "1 USD ≈ 0.92 EUR", tip: "Cappuccino after 11am marks you as a tourist. Espresso only after lunch.",
   },
   japanese: {
-    flag: "🇯🇵", title: "Japanese Phrases",
+    flag: "🇯🇵", title: "Japan", language: "Japanese",
     teaser: [
       ["Hello / Goodbye", "Konnichiwa / Sayōnara"],
       ["Thank You / You're Welcome", "(Domo) Arigato Gozaimass / Do Itashimaste"],
@@ -755,7 +755,7 @@ const DATA = {
     shopping: [["Do you have this in [size]?","Kore wa [size] arimaska?"],["What size is this?","Kore wa nanno saizu deska?"],["Too small / Too big","Chisai / Okii"],["Can I try it on?","Kite mite mo ii deska?"],["Do you have another color?","Hoka no iro arimaska?"],["What's the price?","Ikura deska?"]],
     food: [["Water","Mizu"],["Bottled Water","Mizu bin"],["Ice","Koh-REE"],["Beer","Biru"],["Coffee","Koh-HEE"],["No milk","Gyūnyū nashi"],["Soy milk","Tō-nyū"],["Almond milk","Āmondo miruku"],["Oat milk","Ōtsu miruku"],["Chicken","Tori"],["Beef","Gyoo-nee-KOO"],["Fish","Sakana"],["No shellfish","Ebi, kani nuki"],["Delicious","Oishī"]],
     locations: [["Restroom","Toh-EH-toe"],["Restaurant","Res-toh-RAN"],["Hotel","Ho-teh-RU"],["Train Station","EH-kee"],["Airport","Koo-KOO"],["Museum","Hah-KOO-tsoo-KAN"],["Market","SHEE-joh"],["Pharmacy","Yah-KYU-kyoh-KU"],["ATM","EH-TEH-EMU"],["Currency Exchange","Ryoh-Gae-YA"],["Taxi Stand","TAH-koo-shee noriba"]],
-    culturalTips: ["Remove shoes when entering homes, temples, and some restaurants.","Slurp noodles loudly — it's polite and shows you're enjoying the meal.","Skip Uber — use Grab or local taxi apps (Didi) instead. Taxis are reliable and safe.","Convenience stores (konbini) offer authentic, affordable local food.","Bow slightly when greeting and thanking — it shows respect."],
+    culturalTips: ["📱 TRANSIT: Add Suica to Apple Wallet before your trip. Reload digitally and tap your phone for trains, buses, stores and more.","💴 CASH: Carry yen. Cards work widely, but smaller restaurants, shops, temples and some machines need cash.","🗺️ MAPS: Google Maps works well for navigating Japan, especially for train routes, platforms and directions.","🚕 TAXIS: Uber works in major Japanese cities. Taxis are also reliable and safe.","👟 ETIQUETTE: Remove shoes in homes, traditional accommodations and some restaurants. Never wear toilet slippers outside the restroom."],
     currency: "Japanese Yen", rate: "1 USD ≈ 149 JPY", tip: "Numbers >10: number + 10 + number. 27 = ni Ju Nana. NO tipping — it can be considered rude.",
   },
   korean: {
@@ -838,7 +838,8 @@ function selectDest(dest) {
 
   // Update sheet header
   document.getElementById('sheetFlag').textContent = d.flag;
-  document.getElementById('sheetTitle').textContent = d.title;
+  document.getElementById('sheetTitle').textContent = dest === 'japanese' ? 'Japan Travel Card' : d.title;
+  document.getElementById('sheetSub').textContent = d.language || 'Everything you need on one Travel Card';
 
   // Build teaser phrases
   // Check if email already submitted (from localStorage)
@@ -963,7 +964,9 @@ function showFullSheet(dest) {
 
   // Cultural Tips
   if (d.culturalTips && d.culturalTips.length > 0) {
-    const tipHeader = dest === 'korean' ? 'BEFORE YOU LAND 🇰🇷' : 'Travel Like a Local 🌍';
+    let tipHeader = 'Travel Like a Local 🌍';
+    if (dest === 'korean') tipHeader = 'BEFORE YOU LAND 🇰🇷';
+    if (dest === 'japanese') tipHeader = 'BEFORE YOU LAND 🇯🇵';
     html += `<div class="full-section" style="margin-bottom:4px;">
       <div class="full-section-head head-pink">${tipHeader}</div>`;
     d.culturalTips.forEach((tip) => {
@@ -1000,10 +1003,17 @@ function saveSheetAsImage() {
   
   // Header
   let pngHtml = `<div style="text-align:center;padding:8px 0;border-bottom:1px solid #e0e0e0;margin-bottom:4px;">
-    <div style="font-size:11px;color:#666;margin-bottom:2px;">WanderSpeak</div>
-    <div style="font-size:20px;font-weight:700;color:#534AB7;margin-bottom:2px;">${d.flag} ${d.title} Phrases</div>
-    <div style="font-size:11px;color:#2ECC9A;font-weight:600;">Your Travel Card</div>
-  </div>`;
+    <div style="font-size:11px;color:#666;margin-bottom:2px;">WanderSpeak</div>`;
+  
+  if (currentDest === 'japanese') {
+    pngHtml += `<div style="font-size:20px;font-weight:700;color:#534AB7;margin-bottom:2px;">${d.flag} ${d.title} Travel Card</div>
+    <div style="font-size:11px;color:#2ECC9A;font-weight:600;">${d.language}</div>`;
+  } else {
+    pngHtml += `<div style="font-size:20px;font-weight:700;color:#534AB7;margin-bottom:2px;">${d.flag} ${d.title} Phrases</div>
+    <div style="font-size:11px;color:#2ECC9A;font-weight:600;">Your Travel Card</div>`;
+  }
+  
+  pngHtml += `</div>`;
   
   // Two-column layout
   pngHtml += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">`;
@@ -1031,7 +1041,9 @@ function saveSheetAsImage() {
   
   // Travel Like a Local / Before You Land
   if (d.culturalTips && d.culturalTips.length > 0) {
-    const tipHeader = currentDest === 'korean' ? 'BEFORE YOU LAND 🇰🇷' : 'Travel Like a Local 🌍';
+    let tipHeader = 'Travel Like a Local 🌍';
+    if (currentDest === 'korean') tipHeader = 'BEFORE YOU LAND 🇰🇷';
+    if (currentDest === 'japanese') tipHeader = 'BEFORE YOU LAND 🇯🇵';
     pngHtml += `<div class="full-section" style="margin-bottom:0;">
       <div class="full-section-head head-pink">${tipHeader}</div>`;
     d.culturalTips.forEach((tip) => {
