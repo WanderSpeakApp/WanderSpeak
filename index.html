@@ -781,7 +781,7 @@ const DATA = {
     shopping: [["Do you have this in [size]?","Ee-geot-i [size] Chae-eso Isseo yo?"],["What size is this?","Ee-geot-i Eot-teon Saizu-yo?"],["Too small / Too big","Neomu Jag-eun / Neomu Keun"],["Can I try it on?","Ipeo-bwa-do Dwae-yo?"],["Do you have another color?","Dareun Saekkkal Isseo-yo?"],["What's the price?","Eol Ma-ni Dwae-yo?"],["Do you accept card?","Kah-deu doe-nah yo?"]],
     food: [["Water","Mool"],["Bottled Water","Mul Byung"],["Ice","Uh-reum"],["Beer","Maek Joo"],["Coffee","Coppee"],["No milk","Uu-yu eops-i"],["Soy milk","Doo-yu"],["Almond milk","Ah-mond uu-yu"],["Oat milk","Gwi-ri uu-yu"],["Spicy / Not Spicy","Mae-un / An mae-un"],["Rice","Bap"],["Chicken","Dak"],["Beef","Gyu-Gogi"],["Fish","Saeng-sun"],["No shellfish","Saeu-wa gge eopsi"],["Vegetarian","chae-SEEK-joo-eui-jah"]],
     locations: [["Restroom","Hwa Jang Shil"],["Restaurant","Shik-dang"],["Hotel","Ho-tel"],["Train Station","Kee-Cha-Yoke"],["Subway Station","Jihachuk"],["Airport","Gong-Hang"],["Museum","Bak-Mool-Gwan"],["Market","Shija"],["Convenience Store","Con-bi-nee-uns"],["Pharmacy","Yak-Guk"],["Police","Gyung-Chal"],["Hospital","Byung-Won"],["ATM","Hyup-Ryok-Gi"],["Currency Exchange","Hwanryuk"],["Taxi Stand","Tack-shee-Seung-Cha-Jang"]],
-    culturalTips: ["Maps: Use Naver Map for navigation. It supports English and is perfect for finding local destinations.","Payment: At restaurants, go to the register to pay—don't ask for the check at your table.","Taxis: Use Kakao T app. Uber/UT also available. Red '빈차' sign = vacant. Green '예약' = reserved.","Transit: Get a T-money card for buses and subways—available at convenience stores and stations.","Taxi Tip: Many drivers don't speak English. Have your destination address in Korean ready on your phone."],
+    culturalTips: ["Maps: Use Naver Map for navigation. It supports English and is perfect for finding local destinations.","Payment: At restaurants, go to the register to pay—don't ask for the check at your table.","Taxis: Use k.ride (foreigner-friendly) or Uber Taxi. Red \"빈차\" = available; green \"예약\" = reserved.","Transit: Get a T-money card for buses/subways at convenience stores or stations. Bring KRW cash to buy/reload it.","Taxi Tip: Many drivers don't speak English. Have your destination address in Korean ready on your phone."],
     currency: "Korean Won", rate: "10 USD = ~13,000 KRW", tip: "Credit cards widely accepted, even for small purchases. Remove 3 zeros from KRW, less 20% = approx USD. No tipping customary.",
   },
 };
@@ -963,8 +963,9 @@ function showFullSheet(dest) {
 
   // Cultural Tips
   if (d.culturalTips && d.culturalTips.length > 0) {
+    const tipHeader = dest === 'korean' ? 'BEFORE YOU LAND 🇰🇷' : 'Travel Like a Local 🌍';
     html += `<div class="full-section" style="margin-bottom:4px;">
-      <div class="full-section-head head-pink">Travel Like a Local 🌍</div>`;
+      <div class="full-section-head head-pink">${tipHeader}</div>`;
     d.culturalTips.forEach((tip) => {
       html += `<div class="tip-item" style="padding:6px 12px;font-size:12px;">${tip}</div>`;
     });
@@ -1028,10 +1029,11 @@ function saveSheetAsImage() {
   }
   pngHtml += `</div>`;
   
-  // Travel Like a Local
+  // Travel Like a Local / Before You Land
   if (d.culturalTips && d.culturalTips.length > 0) {
+    const tipHeader = currentDest === 'korean' ? 'BEFORE YOU LAND 🇰🇷' : 'Travel Like a Local 🌍';
     pngHtml += `<div class="full-section" style="margin-bottom:0;">
-      <div class="full-section-head head-pink">Travel Like a Local 🌍</div>`;
+      <div class="full-section-head head-pink">${tipHeader}</div>`;
     d.culturalTips.forEach((tip) => {
       pngHtml += `<div class="tip-item" style="padding:6px 12px;font-size:12px;">${tip}</div>`;
     });
